@@ -15,10 +15,11 @@ function App() {
   return (
     <BrowserRouter>
     <Routes>
+    <Route path='/login' element={<Login/>}/>
       <Route path='/' element={<SharedPage/>}>
         <Route index element={<Dashboard/>}/>
         <Route path='about' element={<About/>}/>
-        <Route path='login' element={<Login/>}/>
+        
         <Route path='FAQs' element={<FAQs/>}/>
         <Route path='notification' element={<Notification/>}/>
         <Route path='approvals' element={<Approvals/>}/>
