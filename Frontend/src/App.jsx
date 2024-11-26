@@ -1,4 +1,5 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import { useState } from 'react';
 
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
@@ -11,14 +12,14 @@ import Notification from './pages/Notification';
 import Approvals from './pages/Approvals';
 
 function App() {
-
+  const [user, setUser] = useState(null);
   return (
     <BrowserRouter>
     <Routes>
       <Route path='/' element={<SharedPage/>}>
-        <Route index element={<Dashboard/>}/>
+        <Route index element={<Dashboard user={user}/>}/>
         <Route path='about' element={<About/>}/>
-        <Route path='login' element={<Login/>}/>
+        <Route path='login' element={<Login setUser={setUser}/>}/>
         <Route path='FAQs' element={<FAQs/>}/>
         <Route path='notification' element={<Notification/>}/>
         <Route path='approvals' element={<Approvals/>}/>
