@@ -9,6 +9,7 @@ export default {
       colors: {
         'blue-green': '#13455B', 
         'peach': '#FFB27D',
+        'primary': 'rgba(230, 149, 61, 0.7)',
       },
     },
   },
