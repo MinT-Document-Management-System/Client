@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import SharedPage from './pages/SharedPage';
 import Notification from './pages/Notification';
 import Approvals from './pages/Approvals';
+import Upload from './pages/Upload';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         <Route path='FAQs' element={<FAQs/>}/>
         <Route path='notification' element={<Notification/>}/>
         <Route path='approvals' element={<Approvals/>}/>
+        <Route path='Upload' element={<Upload/>}/>
         <Route path='*' element={<Error/>}/> 
       </Route>
     </Routes>
