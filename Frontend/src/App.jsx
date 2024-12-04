@@ -24,7 +24,7 @@ function App() {
         <Route path='FAQs' element={<FAQs/>}/>
         <Route path='notification' element={<Notification/>}/>
         <Route path='approvals' element={<Approvals/>}/>
-        <Route path='Upload' element={<Upload/>}/>
+        <Route path='upload' element={<Upload/>}/>
         <Route path='*' element={<Error/>}/> 
       </Route>
     </Routes>

@@ -1,4 +1,4 @@
-import upload from "../asset/upload-icon.png"
+import upload from "../assets/upload-icon.png"
 
 const Upload = () => {
 
