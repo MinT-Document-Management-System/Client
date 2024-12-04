@@ -10,6 +10,7 @@ import SharedPage from './pages/SharedPage';
 import Notification from './pages/Notification';
 import Approvals from './pages/Approvals';
 import Upload from './pages/Upload';
+import Register from "./pages/Register"
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
       <Route path='/' element={<SharedPage/>}>
         <Route index element={<Dashboard/>}/>
         <Route path='about' element={<About/>}/>
+        <Route path='Register' element={<Register/>}/>
         
         <Route path='FAQs' element={<FAQs/>}/>
         <Route path='notification' element={<Notification/>}/>
