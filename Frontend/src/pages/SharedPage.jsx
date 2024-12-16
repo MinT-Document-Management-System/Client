@@ -4,13 +4,13 @@ import Sidebar from "../components/Sidebar"
 
 function Home() {
 return (
-    <>
-        <Navbar />
-        <div style={{ display: "flex" }}>
-            <div className="flex flex-row gap-5"><Sidebar/></div>
-            <div><Outlet /></div>
+    <div className='grid grid-cols-4'>
+        <Sidebar className='col-span-1'/>
+        <div className='col-span-3'>
+            <Navbar/>
+            <Outlet/>
         </div>
-    </>
+    </div>
 )
 }
-export default Home
+export default Home;

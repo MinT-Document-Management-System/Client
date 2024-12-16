@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaEnvelope, FaKey } from "react-icons/fa";
-import Logo from "../asset/download (2).jpg";
+import Logo from "../assets/Logo.jpg";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -13,6 +13,7 @@ function Login() {
   };
   const handleLogin = () => {
     if (email === mockUser.email && password === mockUser.password) {
+      window.location.href = "/";
       alert("Login successful!");
     } else {
       alert("Invalid email or password.");
