@@ -28,7 +28,6 @@ function App() {
         <Route path='RecordDashboard' element={<RecordDashboard/>}/>'
         <Route path='notification' element={<Notification/>}/>
         <Route path='approvals' element={<Approvals/>}/>
-        <Route path='upload' element={<Upload/>}/>
         <Route path='*' element={<Error/>}/> 
       </Route>
     </Routes>

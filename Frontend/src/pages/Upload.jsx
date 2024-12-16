@@ -3,7 +3,7 @@ import { useState } from "react"
 import upload from "../assets/upload-icon.png"
 import Metadata from "./Metadata"
 
-const Upload = () => {
+const Upload = ({isUploaded}) => {
 
   const [isSelected, setIsSelected] = useState(false);
 
@@ -13,6 +13,10 @@ const Upload = () => {
 
   const handleClose = () => {
     setIsSelected(false);
+  }
+
+  if (!isUploaded) {
+    return null;
   }
 
   return (
