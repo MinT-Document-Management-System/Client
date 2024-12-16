@@ -1,4 +1,6 @@
-import upload from "../assets/upload-icon.png"
+import { useState } from "react"
+import upload from "../asset/upload-icon.png"
+import Metadata from "./Metadata"
 
 const Upload = () => {
 
