@@ -1,19 +1,12 @@
-import { React, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
-const AddNewDeprtment = () => {
+const AddNewDepartment = () => {
   const [formData, setFormData] = useState({
     DepartmentName: '',
-    offoceNo: "",
+    officeNo: '',
     DepartmentId: '',
-   
-  
-
-  
   });
-  const [department, setDepartment] = useState([]);
-
- 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,16 +21,21 @@ const AddNewDeprtment = () => {
     console.log('Form Data:', formData);
 
     try {
-      // Assuming you're sending this data to a backend
-    //   const response = await axios.post('your-api-endpoint', formData)
+      
+      alert('Department added successfully!');
       setFormData({
         DepartmentName: '',
-        offoceNo: "",
-        DepartmentId: ''
-
-      
+        officeNo: '',
+        DepartmentId: '',
+      });
+      axios.post("http://localhost:3000/api/departments",formData)
+        .then((response)=>{
+            console.log(response.data)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
     } catch (error) {
-     
       console.error('Error submitting form:', error);
       alert('There was an error submitting the form.');
     }
@@ -45,8 +43,11 @@ const AddNewDeprtment = () => {
 
   return (
     <div className="p-4 max-w-lg mx-auto">
-      <form onSubmit={handleOnSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h1 className="text-xl font-bold mb-4">Add a New USER Account</h1>
+      <form
+        onSubmit={handleOnSubmit}
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      >
+        <h1 className="text-xl font-bold mb-4">Add a New Department</h1>
         <div className="flex flex-col gap-4">
           <input
             name="DepartmentName"
@@ -56,24 +57,20 @@ const AddNewDeprtment = () => {
             placeholder="Department Name"
             required
           />
-        
           <input
-            name="employeeId"
+            name="DepartmentId"
             value={formData.DepartmentId}
             onChange={handleInputChange}
             className="border p-2 rounded"
-            placeholder="Employee ID"
+            placeholder="Department ID"
             required
           />
-        
-         
-          
           <input
-            name="offoceNo"
-            value={formData.offoceNo}
+            name="officeNo"
+            value={formData.officeNo}
             onChange={handleInputChange}
             className="border p-2 rounded"
-            placeholder="offoce Number"
+            placeholder="Office Number"
             required
           />
         </div>
@@ -87,5 +84,5 @@ const AddNewDeprtment = () => {
     </div>
   );
 };
-}
-export default AddNewDeprtment
+
+export default AddNewDepartment;
