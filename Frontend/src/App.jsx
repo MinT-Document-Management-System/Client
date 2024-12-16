@@ -11,6 +11,7 @@ import Notification from './pages/Notification';
 import Approvals from './pages/Approvals';
 import Upload from './pages/Upload';
 import Register from "./pages/Register"
+import RecordDashboard from './pages/RecordDashboard';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         <Route path='Register' element={<Register/>}/>
         
         <Route path='FAQs' element={<FAQs/>}/>
+        <Route path='RecordDashboard' element={<RecordDashboard/>}/>'
         <Route path='notification' element={<Notification/>}/>
         <Route path='approvals' element={<Approvals/>}/>
         <Route path='upload' element={<Upload/>}/>
