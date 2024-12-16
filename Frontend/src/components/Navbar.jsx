@@ -2,6 +2,7 @@ import { MdAccountBox } from "react-icons/md";
 import { IoIosLogOut,IoMdSettings,IoMdNotifications } from "react-icons/io";
 import { useState } from 'react';
 import photo from '../assets/Logo.jpg';
+
 const Navbar = () =>{
     const [isOpen, setIsOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);

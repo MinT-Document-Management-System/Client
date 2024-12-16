@@ -8,6 +8,10 @@ const Metadata = ({ isOpen }) => {
   const [departmentName, setDepartmentName] = useState('');
   const [documentAuthor, setDocumentAuthor] = useState('');
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <div className="relative justify-center items-center bg-white
      ml-[5%] mt-6 w-[880px] h-[530px] border border-gray-500 rounded-[25px]">
