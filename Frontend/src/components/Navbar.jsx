@@ -2,15 +2,13 @@ import { MdAccountBox } from "react-icons/md";
 import { IoIosLogOut,IoMdSettings,IoMdNotifications } from "react-icons/io";
 import { useState } from 'react';
 import photo from '../assets/Logo.jpg';
+import { Layout, Menu, theme } from "antd";
 
-// import { Layout, Menu, theme } from "antd";
-// const {
-//     token: { colorBgContainer },
-//   } = theme.useToken();
 
 const Navbar = () =>{
     const [isOpen, setIsOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+    const {token: { colorBgContainer },} = theme.useToken();
     return(
         <>
         <div className="flex flex-row justify-between h-20 items-center border shadow-lg rounded-2xl p-5 px-10">
