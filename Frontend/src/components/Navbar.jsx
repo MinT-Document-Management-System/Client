@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Notification from '../pages/Notification';
 import photo from '../assets/Logo.jpg';
 import { NavLink } from "react-router-dom";
-import photo from '../assets/Logo.jpg';
+// import photo from '../assets/Logo.jpg';
 
 
 const Navbar = () =>{
