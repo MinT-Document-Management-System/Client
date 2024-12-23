@@ -1,0 +1,1 @@
+export const base_url = "https://server-mint.onrender.com/api/";
