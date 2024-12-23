@@ -74,7 +74,7 @@ const RecordDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {[...Array(20)].map((_, index) => (
+                {[...Array(15)].map((_, index) => (
                   <tr key={index} className="h-12">
                     <td className="px-2 py-1 shadow-lg">
                       <input
@@ -88,9 +88,9 @@ const RecordDashboard = () => {
                     <td className="px-2 py-1 shadow-lg">Name {index + 1}</td>
                     <td className="px-2 py-1 shadow-lg">{20 + index}</td>
                     <td className="px-2 py-1 shadow-lg">
-                      email{index + 1}@example.com
+                      Doc{index + 1}.doc
                     </td>
-                    <td className="px-2 py-1 shadow-lg">Address {index + 1}</td>
+                    <td className="px-2 py-1 shadow-lg">Department {index + 1}</td>
                     <td className="px-2 py-1 shadow-lg">123-456-789{index}</td>
                     <td className="px-2 py-1 shadow-lg">Company {index + 1}</td>
                     <td className="px-2 py-1 shadow-lg">Position {index + 1}</td>
@@ -100,6 +100,13 @@ const RecordDashboard = () => {
                   </tr>
                 ))}
               </tbody>
+              <tfoot>
+              <tr>
+                <td colSpan="9" className="px-2 py-1 shadow-lg text-center">
+                No more records to display
+                </td>
+              </tr>
+              </tfoot>
             </table>
           </div>
 
