@@ -24,7 +24,6 @@ const Register = () => {
         ]);
       }, []);
     
-      
       // useEffect=(()=>{
       //   axios.get("http://localhost:3000/api/departments")
       //        .then(response=>{

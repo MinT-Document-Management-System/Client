@@ -58,22 +58,23 @@ const RecordDashboard = () => {
           </div>
 
           <div className="mb-4 overflow-y-auto h-[60%]">
+
             <table className="table-auto border-collapse">
               <thead>
                 <tr>
                   <th className="px-2 py-1 shadow-lg">Select</th>
-                  <th className="px-2 py-1 shadow-lg">Title</th>
+                  <th className="px-2 py-1 shadow-lg">Document Name</th>
                   <th className="px-2 py-1 shadow-lg">Date</th>
-                  <th className="px-2 py-1 shadow-lg">Email</th>
-                  <th className="px-2 py-1 shadow-lg">Address</th>
+                  <th className="px-2 py-1 shadow-lg">Document Type</th>
+                  <th className="px-2 py-1 shadow-lg">Department Name</th>
                   <th className="px-2 py-1 shadow-lg">Phone</th>
                   <th className="px-2 py-1 shadow-lg">Company</th>
-                  <th className="px-2 py-1 shadow-lg">Position</th>
+                  <th className="px-2 py-1 shadow-lg">Document Author</th>
                   <th className="px-2 py-1 shadow-lg">Status</th>
                 </tr>
               </thead>
               <tbody>
-                {[...Array(20)].map((_, index) => (
+                {[...Array(15)].map((_, index) => (
                   <tr key={index} className="h-12">
                     <td className="px-2 py-1 shadow-lg">
                       <input
@@ -87,9 +88,9 @@ const RecordDashboard = () => {
                     <td className="px-2 py-1 shadow-lg">Name {index + 1}</td>
                     <td className="px-2 py-1 shadow-lg">{20 + index}</td>
                     <td className="px-2 py-1 shadow-lg">
-                      email{index + 1}@example.com
+                      Doc{index + 1}.doc
                     </td>
-                    <td className="px-2 py-1 shadow-lg">Address {index + 1}</td>
+                    <td className="px-2 py-1 shadow-lg">Department {index + 1}</td>
                     <td className="px-2 py-1 shadow-lg">123-456-789{index}</td>
                     <td className="px-2 py-1 shadow-lg">Company {index + 1}</td>
                     <td className="px-2 py-1 shadow-lg">Position {index + 1}</td>
@@ -99,6 +100,13 @@ const RecordDashboard = () => {
                   </tr>
                 ))}
               </tbody>
+              <tfoot>
+              <tr>
+                <td colSpan="9" className="px-2 py-1 shadow-lg text-center">
+                No more records to display
+                </td>
+              </tr>
+              </tfoot>
             </table>
           </div>
 

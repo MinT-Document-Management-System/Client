@@ -27,6 +27,7 @@ function App() {
         <Route path="AddNewDepartment" element={<AddNewDepartment/>}/>
         <Route path='FAQs' element={<FAQs/>}/>
         <Route path='RecordDashboard' element={<RecordDashboard/>}/>'
+        <Route path='FAQs' element={<FAQs/>}/>
         <Route path='notification' element={<Notification/>}/>
         <Route path='approvals' element={<Approvals/>}/>
         <Route path='*' element={<Error/>}/> 
