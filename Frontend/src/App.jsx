@@ -12,6 +12,7 @@ import Approvals from './pages/Approvals';
 import Upload from './pages/Upload';
 import Register from "./pages/Register"
 import RecordDashboard from './pages/RecordDashboard';
+import AddNewDepartment from './pages/addNewDepartment';
 
 function App() {
 
@@ -23,9 +24,10 @@ function App() {
         <Route index element={<Dashboard/>}/>
         <Route path='about' element={<About/>}/>
         <Route path='Register' element={<Register/>}/>
-        
+        <Route path="AddNewDepartment" element={<AddNewDepartment/>}/>
         <Route path='FAQs' element={<FAQs/>}/>
         <Route path='RecordDashboard' element={<RecordDashboard/>}/>'
+        <Route path='FAQs' element={<FAQs/>}/>
         <Route path='notification' element={<Notification/>}/>
         <Route path='approvals' element={<Approvals/>}/>
         <Route path='*' element={<Error/>}/> 
