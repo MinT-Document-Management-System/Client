@@ -58,17 +58,18 @@ const RecordDashboard = () => {
           </div>
 
           <div className="mb-4 overflow-y-auto h-[60%]">
+
             <table className="table-auto border-collapse">
               <thead>
                 <tr>
                   <th className="px-2 py-1 shadow-lg">Select</th>
-                  <th className="px-2 py-1 shadow-lg">Title</th>
+                  <th className="px-2 py-1 shadow-lg">Document Name</th>
                   <th className="px-2 py-1 shadow-lg">Date</th>
-                  <th className="px-2 py-1 shadow-lg">Email</th>
-                  <th className="px-2 py-1 shadow-lg">Address</th>
+                  <th className="px-2 py-1 shadow-lg">Document Type</th>
+                  <th className="px-2 py-1 shadow-lg">Department Name</th>
                   <th className="px-2 py-1 shadow-lg">Phone</th>
                   <th className="px-2 py-1 shadow-lg">Company</th>
-                  <th className="px-2 py-1 shadow-lg">Position</th>
+                  <th className="px-2 py-1 shadow-lg">Document Author</th>
                   <th className="px-2 py-1 shadow-lg">Status</th>
                 </tr>
               </thead>
