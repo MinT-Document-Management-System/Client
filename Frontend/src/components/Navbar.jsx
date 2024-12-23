@@ -1,9 +1,12 @@
 import { MdAccountBox } from "react-icons/md";
 import { IoIosLogOut,IoMdSettings,IoMdNotifications } from "react-icons/io";
 import { useState } from 'react';
+
 import Notification from '../pages/Notification';
 import photo from '../assets/Logo.jpg';
 import { NavLink } from "react-router-dom";
+import photo from '../assets/Logo.jpg';
+
 
 const Navbar = () =>{
     const [isOpen, setIsOpen] = useState(false);

@@ -24,15 +24,9 @@ function App() {
         <Route index element={<Dashboard/>}/>
         <Route path='about' element={<About/>}/>
         <Route path='Register' element={<Register/>}/>
-<<<<<<< HEAD
+        
         <Route path='FAQs' element={<FAQs/>}/>
-        {/* <Route path='notification' element={<Notification/>}/> */}
-=======
-        <Route path="AddNewDepartment" element={<AddNewDepartment/>}/>
-        <Route path='FAQs' element={<FAQs/>}/>
-        <Route path='RecordDashboard' element={<RecordDashboard/>}/>'
         <Route path='notification' element={<Notification/>}/>
->>>>>>> f725cf4616067a2faaf938d75765fbc42bf1aefa
         <Route path='approvals' element={<Approvals/>}/>
         <Route path='*' element={<Error/>}/> 
       </Route>
