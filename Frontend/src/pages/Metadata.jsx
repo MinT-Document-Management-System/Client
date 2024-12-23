@@ -8,6 +8,23 @@ const Metadata = ({ isOpen }) => {
   const [departmentName, setDepartmentName] = useState('');
   const [documentAuthor, setDocumentAuthor] = useState('');
 
+  if (!isOpen) {
+    return null;
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const metadata = {
+      documentName,
+      documentType,
+      companyName,
+      departmentName,
+      documentAuthor,
+    };
+
+    console.log(metadata);
+  };
+
   return (
     <div className="relative justify-center items-center bg-white
      ml-[5%] mt-6 w-[880px] h-[530px] border border-gray-500 rounded-[25px]">
@@ -16,7 +33,7 @@ const Metadata = ({ isOpen }) => {
         <h1 className="text-center font-semibold text-4xl">Add Metadata</h1>
       </div>
 
-      <form action="/submit" method="post">
+      <form onSubmit={handleSubmit}>
         <div className="relative flex flex-col ml-[20%]">
           <div className="flex flex-row gap-6 m-3">
             <h3 className="text-center w-[20%] pt-2">Document name</h3>
@@ -51,13 +68,13 @@ const Metadata = ({ isOpen }) => {
         </div>
 
         <div className="flex items-center justify-center mt-8">
-          <button className="bg-[#FFB27D] w-[200px] h-[56px] rounded-full text-white">Done</button>
+          <button type="submit" className="bg-[#FFB27D] w-[200px] h-[56px] rounded-full text-white">Done</button>
         </div>
 
       </form>
 
     </div>
-  )
+  );
 }
 
 export default Metadata
