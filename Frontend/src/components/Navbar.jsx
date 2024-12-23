@@ -3,6 +3,11 @@ import { IoIosLogOut,IoMdSettings,IoMdNotifications } from "react-icons/io";
 import { useState } from 'react';
 import photo from '../assets/Logo.jpg';
 
+// import { Layout, Menu, theme } from "antd";
+// const {
+//     token: { colorBgContainer },
+//   } = theme.useToken();
+
 const Navbar = () =>{
     const [isOpen, setIsOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);

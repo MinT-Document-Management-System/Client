@@ -1,16 +1,17 @@
 import {React,useEffect,useState} from 'react'
-// import axios from "axios";
+import { base_url } from '../utils/baseUrl';
+import axios from "axios";
 
 
 const Register = () => {
     const [formData, setFormData] = useState({
-        fullName: '',
+        full_name: '',
         username: '',
         employeeId: '',
         email: '',
-        phoneNumber: '',
-        department: '',
-        position: '',
+        phone_number: '',
+        department_id: '',
+        role_id: '',
       });
       const [department,setDepartment]=useState([])
       useEffect(() => {
