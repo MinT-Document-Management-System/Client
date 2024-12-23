@@ -1,9 +1,11 @@
-
+import axios from "axios";
 import { useState } from "react"
-import upload from "../assets/upload-icon.png"
+import { RiFolderUploadLine } from "react-icons/ri";
 import Metadata from "./Metadata"
 
-const Upload = ({isUploaded}) => {
+const Upload = ({ isUploaded }) => {
+
+  const [file, setFile] = useState(null);
 
   const [isSelected, setIsSelected] = useState(false);
 
@@ -14,6 +16,36 @@ const Upload = ({isUploaded}) => {
   const handleClose = () => {
     setIsSelected(false);
   }
+
+  // Handle file selection
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  // Handle file upload
+  const handleUpload = async () => {
+    if (!file) {
+      alert("Please select a file first!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await axios.post("http://localhost:5173/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      alert("File uploaded successfully!");
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      alert("File upload failed!");
+    }
+    handleShowMetadata();
+  };
 
   if (!isUploaded) {
     return null;
@@ -32,14 +64,19 @@ const Upload = ({isUploaded}) => {
               <h2>Import your document</h2>
             </div>
             <div className="flex flex-col justify-center items-center
-      border-2 m-20 h-[260px]
-       border-dashed border-gray-500 rounded-lg">
-              <p className="text-center">Drag and drop your file</p>
+      border-2 m-20 h-[50%]
+       border-dashed border-gray-500 rounded-xl">
+              <p className="text-center">Select and upload your file</p>
               <div className="flex mt-20 justify-center gap-3">
-                <img src={upload} alt="" height={24} width={24} />
-                <button className="" onClick={handleShowMetadata}>
-                  <p>Select file</p>
-                </button>
+
+                <div className="flex flex-row justify-center items-center">
+                  <input type="file" onChange={handleFileChange} />
+                  <button onClick={handleUpload} className="flex items-center gap-1">
+                    <RiFolderUploadLine />
+                    Upload
+                  </button>
+                </div>
+
               </div>
             </div>
           </section>
