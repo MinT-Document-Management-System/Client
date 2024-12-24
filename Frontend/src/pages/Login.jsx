@@ -6,6 +6,7 @@ import { base_url } from "../utils/baseUrl";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
+import {jwtDecode} from "jwt-decode";
 
 function Login() {
   const navigate = useNavigate()
@@ -20,13 +21,16 @@ function Login() {
             const response = await axios.post(`${base_url}user/login`,UserLogInData);
             console.log(response.data)
             if (response.data.success==true){
-              toast.success('You are Login successfully!');
-              navigate("/")
-              
-
+              localStorage.setItem('token', response.data.jwt_token);
+              toast.success('You are logged in successfully!');
+              const decodedToken = jwtDecode(response.data.jwt_token);
+              localStorage.setItem('user_id', decodedToken.user_id);
+              localStorage.setItem('full_name', decodedToken.full_name);
+              localStorage.setItem('email', decodedToken.email);
+              navigate("/");
             }
             else{
-              toast.success('You are Login successfully!')
+              toast.success('your password or email is incorrect')
               navigate("/login")
             }
             

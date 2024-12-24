@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import Notification from '../pages/Notification';
 import photo from '../assets/Logo.jpg';
+import { Layout, Menu, theme } from "antd";
 
 
 import { NavLink } from "react-router-dom";
@@ -14,6 +15,10 @@ import { NavLink } from "react-router-dom";
 const Navbar = () =>{
     const [isOpen, setIsOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+    const {
+        token: { colorBgContainer },
+      } = theme.useToken();
 
     return(
         <>
