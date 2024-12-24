@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import Notification from '../pages/Notification';
 import photo from '../assets/Logo.jpg';
-import { Layout, Menu, theme } from "antd";
+
 
 
 import { NavLink } from "react-router-dom";
@@ -15,11 +15,9 @@ import { NavLink } from "react-router-dom";
 const Navbar = () =>{
     const [isOpen, setIsOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-
-    const {
-        token: { colorBgContainer },
-      } = theme.useToken();
-
+    const full_name=localStorage.getItem("full_name");
+    const user_id=localStorage.getItem("user_id");
+    console.log(full_name)
     return(
         <>
         <div className="flex flex-row justify-between h-20 min-w-[1000px] items-center border shadow-lg rounded-2xl p-5 px-10">
@@ -34,7 +32,7 @@ const Navbar = () =>{
             </div>}
             <div className="flex items-center gap-2 cursor-pointer" onClick={()=>setIsOpen(!isOpen)}>
                 <img src={photo} alt="Account Holder" className="account-photo w-12 h-12 border border-primary rounded-full" />
-                <span className="account-name">Mr Dinber</span>
+                <span className="account-name">{full_name}</span>
             </div>
             {/*Account dropdown menu*/}
             {isOpen && 
