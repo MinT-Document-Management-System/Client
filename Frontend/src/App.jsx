@@ -14,7 +14,7 @@ import Register from "./pages/Register"
 import RecordDashboard from './pages/RecordDashboard';
 import AddNewDepartment from './pages/addNewDepartment';
 import FrogotPassword from './pages/ForgotPassword';
-
+import ForgotPasswordMessage from "./pages/ForgotPasswordMessage"
 function App() {
 
   return (
@@ -22,6 +22,8 @@ function App() {
     <Routes>
     <Route path='/login' element={<Login/>}/>
     <Route path='/ForgotPassword' element={<FrogotPassword/>}/>
+    <Route path='/ForgotPasswordMessage' element={<ForgotPasswordMessage/>}/>
+
       <Route path='/' element={<SharedPage/>}>
         <Route index element={<Dashboard/>}/>
         <Route path='about' element={<About/>}/>
