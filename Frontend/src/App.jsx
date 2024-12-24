@@ -13,6 +13,7 @@ import Upload from './pages/Upload';
 import Register from "./pages/Register"
 import RecordDashboard from './pages/RecordDashboard';
 import AddNewDepartment from './pages/addNewDepartment';
+import FrogotPassword from './pages/ForgotPassword';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
     <BrowserRouter>
     <Routes>
     <Route path='/login' element={<Login/>}/>
+    <Route path='/ForgotPassword' element={<FrogotPassword/>}/>
       <Route path='/' element={<SharedPage/>}>
         <Route index element={<Dashboard/>}/>
         <Route path='about' element={<About/>}/>
