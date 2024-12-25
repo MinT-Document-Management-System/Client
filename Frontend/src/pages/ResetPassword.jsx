@@ -19,6 +19,8 @@ function ResetPassword() {
          
         })
         const handleChangePassword = async () => {
+          
+          
           try {
             if (PasswordData.new_password !== PasswordData.confirm_password) {
                 toast.error("New password and confirm password must match!");
@@ -52,7 +54,7 @@ function ResetPassword() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setPasswordData({
-      ...UserLogInData,
+      ...PasswordData,
       [name]: value,
     });
   };
@@ -95,7 +97,7 @@ function ResetPassword() {
               <FaKey className="text-gray-500 mr-3 text-xl" />
               <input
                 name="old_password"
-                type="old_password"
+                type="password"
                 placeholder="Old Password"
                 className="outline-none w-full text-lg"
                 value={PasswordData.old_password}
@@ -108,7 +110,7 @@ function ResetPassword() {
               <FaKey className="text-gray-500 mr-3 text-xl" />
               <input
                 name="new_password"
-                type="new_password"
+                type="password"
                 placeholder="New Password"
                 className="outline-none w-full text-lg"
                 value={PasswordData.new_password}
