@@ -14,45 +14,46 @@ const Register = () => {
         department_name: '',
         role_name: '',
       });
-      const [department,setDepartment]=useState([])
+      const [department,setDepartments]=useState([])
       const [Roles,setRoles]=useState([])
       const [isUsernameTaken, setIsUsernameTaken] = useState(false);
       const [usernameCheckLoading, setUsernameCheckLoading] = useState(false);
       useEffect(() => {
-        setDepartment([
-          "HR",
-          "IT"
-        ]);
+        const timeout = setTimeout(() => {
+          if (formData.username.trim()) {
+            checkUsernameAvailability();
+          }
+        }, 500); 
+      
+        return () => clearTimeout(timeout);
+      }, [formData.username]);
+      
+      useEffect(() => {
+        axios
+          .get(`${base_url}department/get_all_departments`)
+          .then(response => {
+            console.log(response)
+            if (response.status==200) {
+              const DepartmentNames = response.data.map(dept => dept.department_name);
+              console.log(DepartmentNames)
+              setDepartments(DepartmentNames);
+            }
+          })
+          .catch(err => console.error('Error fetching departments:', err));
       }, []);
-    
-      // useEffect=(()=>{
-      //   axios.get("http://localhost:3000/api/departments")
-      //        .then(response=>{
-      //         setDepartment(response.data)
-      //        })
-      //        .catch((err)=>{
-              
-      //         console.log(err)
-      //        })
-
-
-      // },[])
+      
       useEffect(() => {
         axios
           .get(`${base_url}role`)
-          .then((response) => {
-            if (response.data.success === true) {
-              console.log(response)
-              const roleNames = response.data.all_roles.map((role) => role.role_name);
-              setRoles(roleNames);
-            } else {
-              console.log("An error occurred while fetching roles.");
+          .then(response => {
+            if (response.data.success) {
+              const RoleNames = response.data.all_roles.map(role => role.role_name);
+              setRoles(RoleNames);
             }
           })
-          .catch((err) => {
-            console.error("Error fetching roles:", err);
-          });
+          .catch(err => console.error('Error fetching roles:', err));
       }, []);
+      
     
 
       const handleInputChange = (e) => {
@@ -64,12 +65,15 @@ const Register = () => {
         setIsUsernameTaken(false);
       };
     
-      const handleOnSubmit = async ()=> {
+      const handleOnSubmit = async (e)=> {
+        e.preventDefault()
          
         try{
         console.log('Form Data:', formData);
         const response= await axios.post(`${base_url}user/signup`,formData)
-        if (response.success==true){
+        console.log(response)
+        if (response.data.success==true){
+          alert("user created succesfully")
           toast.succes('User Create Succesfully');
           navigate("/login")
         }
@@ -81,7 +85,7 @@ const Register = () => {
         }
     
          catch (error) {
-            toast.error('your password or email is incorrect');
+            toast.error('Something is wronge');
             console.log(response.error)
           
             if (error.response) {
@@ -100,12 +104,10 @@ const Register = () => {
       
           setUsernameCheckLoading(true);
           try {
-            const response = await axios.post(`${base_url}user/check-username`, {
-              username: formData.username,
-            });
-      
-            if (response.data.success) {
-              setIsUsernameTaken(response.data.exists); // Backend should return `exists: true/false`
+            const response = await axios.get(`${base_url}user/username_check/:formData.username`);
+            console.log(response)
+            if (response.data.message=="username is not taken") {
+              setIsUsernameTaken(response.data.exists); 
             }
           } catch (error) {
             console.error("Error checking username:", error);
@@ -172,8 +174,8 @@ const Register = () => {
               />
 
               <select
-               name="department"
-               value={formData.department}
+               name="department_name"
+               value={formData.department_name}
                onChange={handleInputChange}
                className="border p-2 rounded"
                required>
