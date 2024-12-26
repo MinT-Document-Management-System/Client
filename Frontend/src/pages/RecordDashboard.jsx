@@ -119,7 +119,7 @@ const RecordDashboard = () => {
           </div>
         </div>
       ) : (
-        <Upload isUploaded={isAddDocumentClicked} />
+        <Upload isUploaded={isAddDocumentClicked}/>
       )}
     </>
   );
