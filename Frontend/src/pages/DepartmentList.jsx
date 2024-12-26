@@ -21,7 +21,7 @@ function DepartmentList() {
       .then(response => {
         console.log(response)
         if (response.status === 200) {
-          setDepartments(response.data.rows || []);
+          setDepartments(response.data || []);
           setTotalPages(response.data.totalPages || 1);
         }
       })
@@ -64,7 +64,7 @@ function DepartmentList() {
   const columns = [
     { key: 'department_id', label: 'ID' },
     { key: 'department_name', label: 'Department Name' },
-    { key: 'department_head_id', label: 'Department Head Name' },
+    { key: 'department_head_name', label: 'Department Head Name' },
     { key: 'department_description', label: 'Department Description' },
     { key: 'created_at', label: 'Created Date' },
     { key: 'updated_at', label: 'Updated Date' },
