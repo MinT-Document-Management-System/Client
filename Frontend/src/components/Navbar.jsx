@@ -1,7 +1,6 @@
 import { MdAccountBox } from "react-icons/md";
 import { IoIosLogOut,IoMdSettings,IoMdNotifications } from "react-icons/io";
 import { useState } from 'react';
-import photo from '../assets/Logo.jpg';
 import Notification from '../pages/Notification';
 import photo from '../assets/Logo.jpg';
 import { NavLink } from "react-router-dom";
