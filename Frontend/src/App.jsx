@@ -13,18 +13,26 @@ import Upload from './pages/Upload';
 import Register from "./pages/Register"
 import RecordDashboard from './pages/RecordDashboard';
 import AddNewDepartment from './pages/addNewDepartment';
-
+import FrogotPassword from './pages/ForgotPassword';
+import ForgotPasswordMessage from "./pages/ForgotPasswordMessage";
+import ResetPassword from "./pages/ResetPassword";
+import AddNewRole from './pages/AddNewRole';
 function App() {
 
   return (
     <BrowserRouter>
     <Routes>
     <Route path='/login' element={<Login/>}/>
+    <Route path='/ForgotPassword' element={<FrogotPassword/>}/>
+    <Route path='/ForgotPasswordMessage' element={<ForgotPasswordMessage/>}/>
+    <Route path="/reset_password" element={<ResetPassword/>}/>
+
       <Route path='/' element={<SharedPage/>}>
         <Route index element={<Dashboard/>}/>
         <Route path='about' element={<About/>}/>
         <Route path='Register' element={<Register/>}/>
         <Route path="AddNewDepartment" element={<AddNewDepartment/>}/>
+        <Route path='AddNewRole' element={<AddNewRole/>}/>
         <Route path='FAQs' element={<FAQs/>}/>
         <Route path='RecordDashboard' element={<RecordDashboard/>}/>'
         <Route path='FAQs' element={<FAQs/>}/>

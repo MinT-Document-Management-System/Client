@@ -8,30 +8,32 @@ import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import {jwtDecode} from "jwt-decode";
 
-function Login() {
+function ResetPassword() {
   const navigate = useNavigate()
-   const [UserLogInData, setUserLogInData] = useState({
+   const [PasswordData, setPasswordData] = useState({
     
     email: '',
-    password: '',
+    old_password: '',
+    new_password: '',
+    confirm_password: ''
          
         })
-        const handleLogin = async () => {
+        const handleChangePassword = async () => {
+          
+          
           try {
-            const response = await axios.post(`${base_url}user/login`,UserLogInData);
+            if (PasswordData.new_password !== PasswordData.confirm_password) {
+                toast.error("New password and confirm password must match!");
+                return; }
+            const response = await axios.post(`${base_url}user/reset_password`,PasswordData);
             console.log(response.data)
             if (response.data.success==true){
-              localStorage.setItem('token', response.data.jwt_token);
-              toast.success('You are logged in successfully!');
-              const decodedToken = jwtDecode(response.data.jwt_token);
-              localStorage.setItem('user_id', decodedToken.user_id);
-              localStorage.setItem('full_name', decodedToken.full_name);
-              localStorage.setItem('email', decodedToken.email);
-              navigate("/");
+              toast.success('You are Change the password successfully!');
+              navigate("/login");
             }
             else{
-              toast.success('your password or email is incorrect')
-              navigate("/login")
+              toast.success('Temopory password or email is incorrect')
+              navigate("/")
             }
             
            
@@ -49,11 +51,10 @@ function Login() {
            
           }
         };
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserLogInData({
-      ...UserLogInData,
+    setPasswordData({
+      ...PasswordData,
       [name]: value,
     });
   };
@@ -63,6 +64,7 @@ function Login() {
       className="flex h-screen"
       style={{ backgroundColor: "#FFB27D" }} 
     >
+        
    
       <div className="w-1/6 bg-blue-green">
         <div className="flex items-center justify-center h-full text-white font-bold text-3xl">
@@ -75,7 +77,9 @@ function Login() {
   alt="Logo"
   className="w-55 h-55 rounded-full object-cover p-4 mx-auto" 
 />
+ <h1>Reset Password</h1>
           <div className="mb-6">
+            
             <label className="flex items-center border rounded-md p-4 bg-gray-50">
               <FaEnvelope className="text-gray-500 mr-3 text-xl" />
               <input
@@ -83,7 +87,7 @@ function Login() {
                 type="email"
                 placeholder="Email"
                 className="outline-none w-full text-lg"
-                value={UserLogInData.email}
+                value={PasswordData.email}
                 onChange={handleInputChange}
               />
             </label>
@@ -92,34 +96,47 @@ function Login() {
             <label className="flex items-center border rounded-md p-4 bg-gray-50">
               <FaKey className="text-gray-500 mr-3 text-xl" />
               <input
-                name="password"
+                name="old_password"
                 type="password"
-                placeholder="Password"
+                placeholder="Old Password"
                 className="outline-none w-full text-lg"
-                value={UserLogInData.password}
+                value={PasswordData.old_password}
                 onChange={handleInputChange} 
               />
             </label>
           </div>
-          <div className="flex items-center justify-between mb-6">
-            <label className="flex items-center">
+          <div className="mb-6">
+            <label className="flex items-center border rounded-md p-4 bg-gray-50">
+              <FaKey className="text-gray-500 mr-3 text-xl" />
               <input
-                type="checkbox"
-                className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded focus:ring focus:ring-blue-200"
+                name="new_password"
+                type="password"
+                placeholder="New Password"
+                className="outline-none w-full text-lg"
+                value={PasswordData.new_password}
+                onChange={handleInputChange} 
               />
-              <span className="ml-2 text-lg text-gray-600">Remember me</span>
             </label>
-            <button className="text-lg text-blue-500 hover:underline">
-              Forgot Password?
-            </button>
+          </div>
+          <div className="mb-6">
+            <label className="flex items-center border rounded-md p-4 bg-gray-50">
+              <FaKey className="text-gray-500 mr-3 text-xl" />
+              <input
+                name="confirm_password"
+                type="confirm_password"
+                placeholder="Confirm Password"
+                className="outline-none w-full text-lg"
+                value={PasswordData.confirm_password}
+                onChange={handleInputChange} 
+              />
+            </label>
           </div>
 
-          {/* Login Button */}
           <button
-            onClick={handleLogin}
+            onClick={handleChangePassword}
             className="w-full bg-blue-500 text-white py-3 rounded-lg font-bold text-lg hover:bg-blue-600 transition"
           >
-            Log In
+            Change Password
           </button>
         </div>
       </div>
@@ -127,4 +144,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ResetPassword;

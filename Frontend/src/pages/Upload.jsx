@@ -1,4 +1,3 @@
-// import axios from "axios";
 import { useState } from "react"
 import { RiFolderUploadLine } from "react-icons/ri";
 import Metadata from "./Metadata"
@@ -23,27 +22,12 @@ const Upload = ({ isUploaded }) => {
   };
 
   // Handle file upload
-  const handleUpload = async () => {
+  const handleUpload = () => {
     if (!file) {
       alert("Please select a file first!");
       return;
     }
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const response = await axios.post("http://localhost:5173/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      alert("File uploaded successfully!");
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      alert("File upload failed!");
-    }
+    
     handleShowMetadata();
   };
 
@@ -81,7 +65,7 @@ const Upload = ({ isUploaded }) => {
             </div>
           </section>
         ) : (
-          <Metadata isOpen={isSelected} onClose={handleClose} />
+          <Metadata file = {file} isOpen={isSelected} onClose={handleClose} />
         )
       }
     </div>
