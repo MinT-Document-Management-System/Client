@@ -1,23 +1,61 @@
 import React, { useState } from "react";
 import { FaEnvelope, FaKey } from "react-icons/fa";
 import Logo from "../assets/Logo.jpg";
+import axios from "axios";
+import { base_url } from "../utils/baseUrl";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
+import {jwtDecode} from "jwt-decode";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate()
+   const [UserLogInData, setUserLogInData] = useState({
+    
+    email: '',
+    password: '',
+         
+        })
+        const handleLogin = async () => {
+          try {
+            const response = await axios.post(`${base_url}user/login`,UserLogInData);
+            console.log(response.data)
+            if (response.data.success==true){
+              localStorage.setItem('token', response.data.jwt_token);
+              toast.success('You are logged in successfully!');
+              const decodedToken = jwtDecode(response.data.jwt_token);
+              localStorage.setItem('user_id', decodedToken.user_id);
+              localStorage.setItem('full_name', decodedToken.full_name);
+              localStorage.setItem('email', decodedToken.email);
+              navigate("/");
+            }
+            else{
+              toast.success('your password or email is incorrect')
+              navigate("/login")
+            }
+            
+           
+          } catch (error) {
+            toast.error('your password or email is incorrect');
+            console.log(response.error)
+          
+            if (error.response) {
+              console.error('Error:', error.response.data);
 
+            }  else {
+              console.error('Error', error.message);
+            }
+            toast.error('your password or email is incorrect');
+           
+          }
+        };
 
-  const mockUser = {
-    email: "test@example.com",
-    password: "password123",
-  };
-  const handleLogin = () => {
-    if (email === mockUser.email && password === mockUser.password) {
-      window.location.href = "/";
-      alert("Login successful!");
-    } else {
-      alert("Invalid email or password.");
-    }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserLogInData({
+      ...UserLogInData,
+      [name]: value,
+    });
   };
 
   return (
@@ -41,11 +79,12 @@ function Login() {
             <label className="flex items-center border rounded-md p-4 bg-gray-50">
               <FaEnvelope className="text-gray-500 mr-3 text-xl" />
               <input
+                name="email"
                 type="email"
                 placeholder="Email"
                 className="outline-none w-full text-lg"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={UserLogInData.email}
+                onChange={handleInputChange}
               />
             </label>
           </div>
@@ -53,11 +92,12 @@ function Login() {
             <label className="flex items-center border rounded-md p-4 bg-gray-50">
               <FaKey className="text-gray-500 mr-3 text-xl" />
               <input
+                name="password"
                 type="password"
                 placeholder="Password"
                 className="outline-none w-full text-lg"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)} 
+                value={UserLogInData.password}
+                onChange={handleInputChange} 
               />
             </label>
           </div>
