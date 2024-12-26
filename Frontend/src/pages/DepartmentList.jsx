@@ -71,58 +71,65 @@ function DepartmentList() {
   ];
 
   return (
-    <div className="p-4 max-w-5xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Department List</h2>
+    <div className="p-4  mx-auto">
+      <h2 className="text-3xl font-bold mb-4">Department List</h2>
       {error ? (
         <p style={{ color: 'red' }}>{error}</p>
       ) : (
         <>
-          <table border="1" style={{ width: '100%', textAlign: 'left' }}>
-            <thead>
-              <tr>
-                {columns.map((col) => (
-                  <th key={col.key} className="p-2 bg-gray-100">{col.label}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {departments.length > 0 ? (
-                departments.map((dept, index) => (
-                  <tr key={index}>
-                    {columns.map((col) => (
-                      <td key={col.key} className="p-2">
-                        {col.key === 'actions' ? (
-                          <div className="flex gap-2">
-                            <button
-                              onClick={() => handleEdit(dept.department_id)}
-                              className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700"
-                            >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => handleDelete(dept.department_id)}
-                              className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700"
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        ) : (
-                          dept[col.key] || 'N/A'
-                        )}
-                      </td>
-                    ))}
-                  </tr>
-                ))
+          <table className="w-full border-collapse border border-gray-300 text-left">
+          <thead>
+            <tr>
+              {columns.map((col) => (
+                <th
+                key={col.key}
+                className="p-2 pl-8 bg-gray-100 border border-gray-300 whitespace-nowrap">
+                {col.label}
+                </th>
+              ))}
+            </tr>
+          </thead>
+  <tbody>
+    {departments.length > 0 ? (
+      departments.map((dept, index) => (
+        <tr key={index} className="hover:bg-gray-50">
+          {columns.map((col) => (
+            <td key={col.key} className="p-2 border border-gray-300">
+              {col.key === 'actions' ? (
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleEdit(dept.department_id)}
+                    className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(dept.department_id)}
+                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700"
+                  >
+                    Delete
+                  </button>
+                </div>
               ) : (
-                <tr>
-                  <td colSpan={columns.length} style={{ textAlign: 'center', padding: '20px' }}>
-                    <MdFolderOff size={50} color="gray"/>
-                    <p>No departments available</p>
-                  </td>
-                </tr>
+                dept[col.key] || 'N/A'
               )}
-            </tbody>
-          </table>
+            </td>
+          ))}
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan={columns.length} className="p-10 border border-gray-300">
+          <div className="flex flex-col items-center justify-center text-center">
+            <MdFolderOff size={50} color="gray" />
+            <p className="mt-2 text-gray-500">No departments available</p>
+          </div>
+        </td>
+      </tr>
+    )}
+  </tbody>
+</table>
+
 
           {/* Pagination Controls */}
           <div className="flex justify-center items-center mt-4 gap-2">
