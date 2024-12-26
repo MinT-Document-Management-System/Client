@@ -44,10 +44,11 @@ const Register = () => {
       
       useEffect(() => {
         axios
-          .get(`${base_url}role`)
+          .get(`${base_url}role/getAllRoles`)
           .then(response => {
             if (response.data.success) {
               const RoleNames = response.data.all_roles.map(role => role.role_name);
+              console.log(response)
               setRoles(RoleNames);
             }
           })

@@ -17,6 +17,7 @@ import FrogotPassword from './pages/ForgotPassword';
 import ForgotPasswordMessage from "./pages/ForgotPasswordMessage";
 import ResetPassword from "./pages/ResetPassword";
 import AddNewRole from './pages/AddNewRole';
+import DepartmentList from './pages/DepartmentList';
 function App() {
 
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path='about' element={<About/>}/>
         <Route path='Register' element={<Register/>}/>
         <Route path="AddNewDepartment" element={<AddNewDepartment/>}/>
+        <Route path="DepartmentList" element={< DepartmentList/>}/>
         <Route path='AddNewRole' element={<AddNewRole/>}/>
         <Route path='FAQs' element={<FAQs/>}/>
         <Route path='RecordDashboard' element={<RecordDashboard/>}/>'
