@@ -3,7 +3,7 @@ import { FaEnvelope, FaKey } from "react-icons/fa";
 import Logo from "../assets/Logo.jpg";
 import axios from "axios";
 import { base_url } from "../utils/baseUrl";
-
+import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import {jwtDecode} from "jwt-decode";
@@ -16,7 +16,10 @@ function Login() {
     password: '',
          
         })
-        const handleLogin = async () => {
+   
+        const handleLogin = async (e) => {
+          e.preventDefault()
+          
           try {
             const response = await axios.post(`${base_url}user/login`,UserLogInData);
             console.log(response.data)
