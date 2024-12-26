@@ -41,11 +41,6 @@ const RecordDashboard = () => {
   return (
     <>
       {!isAddDocumentClicked ? (
-        <div className="p-4 h-screen w-max">
-=======
-  return (
-    <>
-      {!isAddDocumentClicked ? (
         <div className="p-4 h-screen">
        
           <div className="mb-6 flex flex-row justify-between">

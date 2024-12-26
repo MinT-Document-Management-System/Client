@@ -17,10 +17,11 @@ function DepartmentList() {
 
   const fetchDepartments = (page) => {
     axios
-      .get(`${base_url}department/get_all_departments?page=${page}&pageSize=${pageSize}`)
+      .get(`${base_url}department/get_all_departments/${page}/${pageSize}`)
       .then(response => {
+        console.log(response)
         if (response.status === 200) {
-          setDepartments(response.data.departments || []);
+          setDepartments(response.data.rows || []);
           setTotalPages(response.data.totalPages || 1);
         }
       })
@@ -89,45 +90,60 @@ function DepartmentList() {
               ))}
             </tr>
           </thead>
-  <tbody>
-    {departments.length > 0 ? (
-      departments.map((dept, index) => (
-        <tr key={index} className="hover:bg-gray-50">
-          {columns.map((col) => (
-            <td key={col.key} className="p-2 border border-gray-300">
-              {col.key === 'actions' ? (
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleEdit(dept.department_id)}
-                    className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(dept.department_id)}
-                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700"
-                  >
-                    Delete
-                  </button>
-                </div>
-              ) : (
-                dept[col.key] || 'N/A'
-              )}
-            </td>
-          ))}
-        </tr>
-      ))
-    ) : (
-      <tr>
-        <td colSpan={columns.length} className="p-10 border border-gray-300">
-          <div className="flex flex-col items-center justify-center text-center">
-            <MdFolderOff size={50} color="gray" />
-            <p className="mt-2 text-gray-500">No departments available</p>
-          </div>
-        </td>
+          <tbody>
+  {departments.length > 0 ? (
+    departments.map((dept, index) => (
+      <tr key={index} className="hover:bg-gray-50">
+        {columns.map((col) => (
+          <td key={col.key} className="p-2 border border-gray-300">
+            {col.key === 'actions' ? (
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleEdit(dept.department_id)}
+                  className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(dept.department_id)}
+                  className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700"
+                >
+                  Delete
+                </button>
+              </div>
+            ) : col.key === 'created_at' || col.key === 'updated_at' ? ( // Check for created_at or updated_at
+              <span>
+                {new Date(dept[col.key]).toLocaleString('en-US', {
+                  weekday: 'long', // Day of the week
+                  year: 'numeric', // Year
+                  month: 'long', // Month
+                  day: 'numeric', // Day
+                  hour: 'numeric', // Hour
+                  minute: 'numeric', // Minute
+                  second: 'numeric', // Second
+                  hour12: true // Use 12-hour time
+                })}
+              </span>
+            ) : (
+              dept[col.key] || 'N/A'
+            )}
+          </td>
+        ))}
       </tr>
-    )}
-  </tbody>
+    ))
+  ) : (
+    <tr>
+      <td colSpan={columns.length} className="p-10 border border-gray-300">
+        <div className="flex flex-col items-center justify-center text-center">
+          <MdFolderOff size={50} color="gray" />
+          <p className="mt-2 text-gray-500">No departments available</p>
+        </div>
+      </td>
+    </tr>
+  )}
+</tbody>
+
+
 </table>
 
 
