@@ -35,7 +35,6 @@ function Login() {
               navigate("/login")
             }
             
-           
           } catch (error) {
             toast.error('your password or email is incorrect');
             console.log(response.error)
