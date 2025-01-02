@@ -44,7 +44,7 @@ const Register = () => {
       
       useEffect(() => {
         axios
-          .get(`${base_url}role`)
+          .get(`${base_url}role/getAllRoles`)
           .then(response => {
             if (response.data.success) {
               const RoleNames = response.data.all_roles.map(role => role.role_name);
@@ -54,7 +54,7 @@ const Register = () => {
           .catch(err => console.error('Error fetching roles:', err));
       }, []);
       
-    
+
 
       const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -79,8 +79,6 @@ const Register = () => {
         }
         else{
           alert("An Errior occure")
-          
-
         }
         }
     

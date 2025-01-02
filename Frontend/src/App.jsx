@@ -17,6 +17,7 @@ import FrogotPassword from './pages/ForgotPassword';
 import ForgotPasswordMessage from "./pages/ForgotPasswordMessage";
 import ResetPassword from "./pages/ResetPassword";
 import AddNewRole from './pages/AddNewRole';
+import Profile from './pages/Profile';
 function App() {
 
   return (
@@ -26,7 +27,6 @@ function App() {
     <Route path='/ForgotPassword' element={<FrogotPassword/>}/>
     <Route path='/ForgotPasswordMessage' element={<ForgotPasswordMessage/>}/>
     <Route path="/reset_password" element={<ResetPassword/>}/>
-
       <Route path='/' element={<SharedPage/>}>
         <Route index element={<Dashboard/>}/>
         <Route path='about' element={<About/>}/>
@@ -38,6 +38,7 @@ function App() {
         <Route path='FAQs' element={<FAQs/>}/>
         <Route path='notification' element={<Notification/>}/>
         <Route path='approvals' element={<Approvals/>}/>
+        <Route path='profile' element={<Profile/>}/>
         <Route path='*' element={<Error/>}/> 
       </Route>
     </Routes>

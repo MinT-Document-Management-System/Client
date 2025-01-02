@@ -38,7 +38,7 @@ const Navbar = () =>{
             {isOpen && 
                 <div className="absolute top-20 right-4 items-center justify-center w-[220px] bg-white group-hover:block border-none shadow-lg">
                     <div className='flex flex-col justify-center pl-10'>
-                        <NavLink href="#" className="flex p-2 gap-2 hover:text-primary"><MdAccountBox className="text-2xl"/>Profile</NavLink>
+                        <NavLink to='/profile' className="flex p-2 gap-2 hover:text-primary"><MdAccountBox className="text-2xl"/>Profile</NavLink>
                         <NavLink href="#" className="flex p-2 gap-2 hover:text-primary"><IoMdSettings/>Settings</NavLink>
                         <hr className="h-2"/>
                         <a href="/login" className="flex p-2 gap-2 hover:text-primary"><IoIosLogOut/>Logout</a>
