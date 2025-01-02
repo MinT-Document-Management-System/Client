@@ -26,7 +26,6 @@ const Metadata = ({ isOpen,  file}) => {
     };
     
     formData.append("file", file);
-    console.log(file)
     formData.append("metadata", metadata);
   
     try {

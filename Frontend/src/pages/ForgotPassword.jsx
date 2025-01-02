@@ -6,35 +6,28 @@ import { base_url } from "../utils/baseUrl";
 
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
-import {jwtDecode} from "jwt-decode";
 
-function Login() {
+
+function FrogotPassword() {
   const navigate = useNavigate()
-   const [UserLogInData, setUserLogInData] = useState({
+   const [UserData, setUserData] = useState({
     
-    email: '',
-    password: '',
+    email: ''
          
         })
-   
-        const handleLogin = async (e) => {
-          e.preventDefault()
-          
+        const handleResetPassword = async () => {
           try {
-            const response = await axios.post(`${base_url}user/login`,UserLogInData);
+            const response = await axios.post(`${base_url}user/reset_password`,UserData);
             console.log(response.data)
             if (response.data.success==true){
-              localStorage.setItem('token', response.data.jwt_token);
-              toast.success('You are logged in successfully!');
-              const decodedToken = jwtDecode(response.data.jwt_token);
-              localStorage.setItem('user_id', decodedToken.user_id);
-              localStorage.setItem('full_name', decodedToken.full_name);
-              localStorage.setItem('email', decodedToken.email);
-              navigate("/");
+            toast.success('please check your email addrase')
+             
+              navigate("/emailMessage");
             }
             else{
               toast.success('your password or email is incorrect')
-              navigate("/login")
+              window.location.reload()
+              
             }
             
            
@@ -55,8 +48,8 @@ function Login() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserLogInData({
-      ...UserLogInData,
+    setUserData({
+      ...UserData,
       [name]: value,
     });
   };
@@ -86,43 +79,19 @@ function Login() {
                 type="email"
                 placeholder="Email"
                 className="outline-none w-full text-lg"
-                value={UserLogInData.email}
+                value={UserData.email}
                 onChange={handleInputChange}
               />
             </label>
           </div>
-          <div className="mb-6">
-            <label className="flex items-center border rounded-md p-4 bg-gray-50">
-              <FaKey className="text-gray-500 mr-3 text-xl" />
-              <input
-                name="password"
-                type="password"
-                placeholder="Password"
-                className="outline-none w-full text-lg"
-                value={UserLogInData.password}
-                onChange={handleInputChange} 
-              />
-            </label>
-          </div>
-          <div className="flex items-center justify-between mb-6">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded focus:ring focus:ring-blue-200"
-              />
-              <span className="ml-2 text-lg text-gray-600">Remember me</span>
-            </label>
-            <button className="text-lg text-blue-500 hover:underline">
-              Forgot Password?
-            </button>
-          </div>
-
+         
+          
           {/* Login Button */}
           <button
-            onClick={handleLogin}
+            onClick={handleResetPassword}
             className="w-full bg-blue-500 text-white py-3 rounded-lg font-bold text-lg hover:bg-blue-600 transition"
           >
-            Log In
+            ReSet Password
           </button>
         </div>
       </div>
@@ -130,4 +99,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default FrogotPassword;

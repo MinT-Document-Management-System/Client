@@ -1,12 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
+import { base_url } from '../utils/baseUrl';
 
 const AddNewDepartment = () => {
   const [formData, setFormData] = useState({
-    DepartmentName: '',
-    officeNo: '',
-    DepartmentId: '',
+    department_name: '',
+    department_head_id: '',
+    department_description: "",
+    
   });
+  const [Users,setUsers]=useState([])
+
+  useEffect(() => {
+    axios
+      .get(`${base_url}user/get_all_users`)
+      .then(response => {
+        console.log(response)
+        if (response.status==200) {
+          const AllUsers = response.data.map(user => user.full_name);
+          console.log(AllUsers)
+          setUsers(AllUsers);
+        }
+      })
+      .catch(err => console.error('Error fetching departments:', err));
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,12 +40,8 @@ const AddNewDepartment = () => {
     try {
       
       alert('Department added successfully!');
-      setFormData({
-        DepartmentName: '',
-        officeNo: '',
-        DepartmentId: '',
-      });
-      axios.post("http://localhost:3000/api/departments",formData)
+      
+      axios.post(`${base_url}department/add_department`,formData)
         .then((response)=>{
             console.log(response.data)
         })
@@ -42,37 +55,44 @@ const AddNewDepartment = () => {
   };
 
   return (
-    <div className="p-4 max-w-lg mx-auto">
+    <div className="p-4 max-w-5xl mx-auto">
       <form
         onSubmit={handleOnSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-white shadow-md rounded px-10 pt-6 pb-10 mb-4"
       >
         <h1 className="text-xl font-bold mb-4">Add a New Department</h1>
         <div className="flex flex-col gap-4">
           <input
-            name="DepartmentName"
-            value={formData.DepartmentName}
+            name="department_name"
+            value={formData.department_name}
             onChange={handleInputChange}
-            className="border p-2 rounded"
+            className="border p-6 rounded"
             placeholder="Department Name"
             required
           />
-          <input
-            name="DepartmentId"
-            value={formData.DepartmentId}
+          <textarea
+            name="department_description"
+            value={formData.department_description}
             onChange={handleInputChange}
             className="border p-2 rounded"
-            placeholder="Department ID"
+            placeholder="Department Description"
+            rows={4} 
             required
           />
-          <input
-            name="officeNo"
-            value={formData.officeNo}
-            onChange={handleInputChange}
-            className="border p-2 rounded"
-            placeholder="Office Number"
-            required
-          />
+
+
+          <select
+               name="department_head_id"
+               value={formData.department_head_id}
+               onChange={handleInputChange}
+               className="border p-2 rounded"
+               required>
+                <option value="">Select Head</option>
+                {Users.map((user, index) => (
+                   <option key={index} value={user}>
+                    {user}
+                    </option>))}
+            </select>
         </div>
         <button
           type="submit"
