@@ -1,28 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Upload from './Upload';
 import { GrDocumentUpload } from "react-icons/gr";
 import { CiSearch } from "react-icons/ci";
 import { TbFilterUp } from "react-icons/tb";
-import axios from "axios";
 
 const RecordDashboard = () => {
-
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("https://server-mint.onrender.com/api/letter/get_all_letters?page=1&page_size=10");
-        console.log(response.data);
-        setData(response.data.rows);
-      } catch (error) {
-        console.error("Error Recieving file:", error);
-        alert("File Recieve failed!");
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const [isAddDocumentClicked, setIsaddDocumentClicked] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -42,25 +24,30 @@ const RecordDashboard = () => {
   };
 
   // Handle deletion
-  // const handleDelete = () => {
-  //   if (selectedIds.length === 0) {
-  //     alert('No cells selected for deletion.');
-  //     return;
-  //   }
+  const handleDelete = () => {
+    if (selectedIds.length === 0) {
+      alert('No cells selected for deletion.');
+      return;
+    }
 
-  //   // Confirm deletion
-  //   if (window.confirm('Are you sure you want to delete the selected cells?')) {
-  //     const updatedData = data.filter((item) => !selectedIds.includes(item.id));
-  //     setData(updatedData); // Update the state with remaining data
-  //     setSelectedIds([]); // Clear selection
-  //   }
-  // };
-  // console.log(data[0].title)
+    // Confirm deletion
+    if (window.confirm('Are you sure you want to delete the selected cells?')) {
+      const updatedData = data.filter((item) => !selectedIds.includes(item.id));
+      setData(updatedData); // Update the state with remaining data
+      setSelectedIds([]); // Clear selection
+    }
+  };
+
   return (
     <>
       {!isAddDocumentClicked ? (
         <div className="p-4 h-screen w-max">
-
+=======
+  return (
+    <>
+      {!isAddDocumentClicked ? (
+        <div className="p-4 h-screen">
+       
           <div className="mb-6 flex flex-row justify-between">
             <button
               onClick={handleAddDocument}
@@ -108,46 +95,38 @@ const RecordDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="h-12">
-                  <td className="px-2 py-1 shadow-lg">
-                    <input
-                      type="checkbox"
-                      name="item-1"
-                      checked={!!checkedItems["item-1"]}
-                      onChange={handleCheckboxChange}
-                      className="mr-2"
-                    />
-                  </td>
-                  <td className="px-2 py-1 shadow-lg">Name 1</td>
-                  <td className="px-2 py-1 shadow-lg">20</td>
-                  <td className="px-2 py-1 shadow-lg">Doc1.doc</td>
-                  <td className="px-2 py-1 shadow-lg">Department 1</td>
-                  <td className="px-2 py-1 shadow-lg">123-456-7890</td>
-                  <td className="px-2 py-1 shadow-lg">Company 1</td>
-                  <td className="px-2 py-1 shadow-lg">Position 1</td>
-                  <td className="px-2 py-1 shadow-lg">Active</td>
-                </tr>
-                {data.map((item, id) => {
-                  return (
-                    <tr key={id} className="h-12">
-                      <td className="px-2 py-1 shadow-lg">{item.title}</td>
-                      <td className="px-2 py-1 shadow-lg"><a href = {item.file_path}>Click</a></td>
-                      <td className="px-2 py-1 shadow-lg">Doc1.doc</td>
-                      <td className="px-2 py-1 shadow-lg">Department 1</td>
-                      <td className="px-2 py-1 shadow-lg">123-456-7890</td>
-                      <td className="px-2 py-1 shadow-lg">Company 1</td>
-                      <td className="px-2 py-1 shadow-lg">Position 1</td>
-                      <td className="px-2 py-1 shadow-lg">Active</td>
-                    </tr>
-                  )
-                })}
+                {[...Array(15)].map((_, index) => (
+                  <tr key={index} className="h-12">
+                    <td className="px-2 py-1 shadow-lg">
+                      <input
+                        type="checkbox"
+                        name={`item-${index}`}
+                        checked={!!checkedItems[`item-${index}`]}
+                        onChange={handleCheckboxChange}
+                        className="mr-2"
+                      />
+                    </td>
+                    <td className="px-2 py-1 shadow-lg">Name {index + 1}</td>
+                    <td className="px-2 py-1 shadow-lg">{20 + index}</td>
+                    <td className="px-2 py-1 shadow-lg">
+                      Doc{index + 1}.doc
+                    </td>
+                    <td className="px-2 py-1 shadow-lg">Department {index + 1}</td>
+                    <td className="px-2 py-1 shadow-lg">123-456-789{index}</td>
+                    <td className="px-2 py-1 shadow-lg">Company {index + 1}</td>
+                    <td className="px-2 py-1 shadow-lg">Position {index + 1}</td>
+                    <td className="px-2 py-1 shadow-lg">
+                      {index % 2 === 0 ? 'Active' : 'Inactive'}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
               <tfoot>
-                <tr>
-                  <td colSpan="9" className="px-2 py-1 shadow-lg text-center">
-                    No more records to display
-                  </td>
-                </tr>
+              <tr>
+                <td colSpan="9" className="px-2 py-1 shadow-lg text-center">
+                No more records to display
+                </td>
+              </tr>
               </tfoot>
             </table>
           </div>
@@ -156,7 +135,7 @@ const RecordDashboard = () => {
             <button className="bg-[#FFB27D] text-white px-6 py-2 rounded-full">
               Download
             </button>
-            <button className="bg-[rgb(228,44,53)] text-white px-6 py-2 rounded-full">
+            <button onClick={handleDelete} className="bg-[rgb(228,44,53)] text-white px-6 py-2 rounded-full">
               Delete
             </button>
             <button className="bg-[#FFB27D] text-white px-6 py-2 rounded-full">
