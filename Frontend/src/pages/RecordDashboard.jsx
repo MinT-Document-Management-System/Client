@@ -1,10 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Upload from './Upload';
 import { GrDocumentUpload } from "react-icons/gr";
 import { CiSearch } from "react-icons/ci";
 import { TbFilterUp } from "react-icons/tb";
+import axios from "axios";
 
 const RecordDashboard = () => {
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("https://server-mint.onrender.com/api/letter/get_all_letters?page=1&page_size=10");
+        console.log(response.data);
+        setData(response.data.rows);
+      } catch (error) {
+        console.error("Error Recieving file:", error);
+        alert("File Recieve failed!");
+      }
+    };
+    fetchData();
+  }, []);
 
   const [isAddDocumentClicked, setIsaddDocumentClicked] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -41,12 +58,7 @@ const RecordDashboard = () => {
   return (
     <>
       {!isAddDocumentClicked ? (
-        <div className="p-4 h-screen w-max">
-=======
-  return (
-    <>
-      {!isAddDocumentClicked ? (
-        <div className="p-4 h-screen">
+        <div className="p-4 h-screen w-full">
        
           <div className="mb-6 flex flex-row justify-between">
             <button
@@ -78,55 +90,46 @@ const RecordDashboard = () => {
             </button>
           </div>
 
-          <div className="mb-4 overflow-y-auto h-[60%]">
+          <div className="mb-4 overflow-x-auto overflow-y-auto h-[60%]">
 
             <table className="table-auto border-collapse">
               <thead>
                 <tr>
-                  <th className="px-2 py-1 shadow-lg">Select</th>
-                  <th className="px-2 py-1 shadow-lg">Document Name</th>
+                  <th className="px-2 py-1 shadow-lg">Document Title</th>
+                  <th className="px-2 py-1 shadow-lg">File Name</th>
                   <th className="px-2 py-1 shadow-lg">Date</th>
                   <th className="px-2 py-1 shadow-lg">Document Type</th>
-                  <th className="px-2 py-1 shadow-lg">Department Name</th>
-                  <th className="px-2 py-1 shadow-lg">Phone</th>
-                  <th className="px-2 py-1 shadow-lg">Company</th>
-                  <th className="px-2 py-1 shadow-lg">Document Author</th>
+                  <th className="px-2 py-1 shadow-lg">Description</th>
+                  <th className="px-2 py-1 shadow-lg">Direction</th>
                   <th className="px-2 py-1 shadow-lg">Status</th>
                 </tr>
               </thead>
               <tbody>
-                {[...Array(15)].map((_, index) => (
-                  <tr key={index} className="h-12">
-                    <td className="px-2 py-1 shadow-lg">
-                      <input
-                        type="checkbox"
-                        name={`item-${index}`}
-                        checked={!!checkedItems[`item-${index}`]}
-                        onChange={handleCheckboxChange}
-                        className="mr-2"
-                      />
-                    </td>
-                    <td className="px-2 py-1 shadow-lg">Name {index + 1}</td>
-                    <td className="px-2 py-1 shadow-lg">{20 + index}</td>
-                    <td className="px-2 py-1 shadow-lg">
-                      Doc{index + 1}.doc
-                    </td>
-                    <td className="px-2 py-1 shadow-lg">Department {index + 1}</td>
-                    <td className="px-2 py-1 shadow-lg">123-456-789{index}</td>
-                    <td className="px-2 py-1 shadow-lg">Company {index + 1}</td>
-                    <td className="px-2 py-1 shadow-lg">Position {index + 1}</td>
-                    <td className="px-2 py-1 shadow-lg">
-                      {index % 2 === 0 ? 'Active' : 'Inactive'}
-                    </td>
-                  </tr>
-                ))}
+                {data.map((item, id) => {
+                  return (
+                    <tr key={id} className="h-12">
+                      <td className="px-2 py-1 shadow-lg">{item.title}</td>
+                      <td className="px-2 py-1 shadow-lg"><a href={item.file_path}>{item.file_name}</a></td>
+                      <td className="px-2 py-1 shadow-lg">{item.created_at
+                      }</td>
+                      <td className="px-2 py-1 shadow-lg">{item.document_type
+                      }</td>
+                      <td className="px-2 py-1 shadow-lg">{item.description
+                      }</td>
+                      <td className="px-2 py-1 shadow-lg">{item.direction
+                      }</td>
+                      <td className="px-2 py-1 shadow-lg">{item.approval_status
+                      }</td>
+                    </tr>
+                  )
+                })}
               </tbody>
               <tfoot>
-              <tr>
-                <td colSpan="9" className="px-2 py-1 shadow-lg text-center">
-                No more records to display
-                </td>
-              </tr>
+                <tr>
+                  <td colSpan="9" className="px-2 py-1 shadow-lg text-center">
+                    No more records to display
+                  </td>
+                </tr>
               </tfoot>
             </table>
           </div>

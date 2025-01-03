@@ -4,78 +4,75 @@ import { base_url } from '../utils/baseUrl';
 import { useNavigate } from 'react-router-dom';
 import { MdFolderOff } from 'react-icons/md';
 
-function DepartmentList() {
-  const [departments, setDepartments] = useState([]);
-  const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const navigate=useNavigate()
-  const pageSize = 10;
-  useEffect(() => {
-    fetchDepartments(currentPage);
-  }, [currentPage]);
+function RoleList() {
 
-  const fetchDepartments = (page) => {
-    axios
-      .get(`${base_url}department/get_all_departments/${page}/${pageSize}`)
-      .then(response => {
-        console.log(response)
-        if (response.status === 200) {
-          setDepartments(response.data || []);
-          setTotalPages(response.data.totalPages || 1);
-        }
-      })
-      .catch(err => {
-        console.error('Error fetching departments:', err);
-        setError('Failed to fetch departments');
-      });
-  };
-
-  const handleEdit = (id) => {
-    console.log(`Editing department with ID: ${id}`);
-    navigate("/:id")
-
-    
-  };
-
-  const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this department?')) {
+    const [roles, setRoles] = useState([]);
+    const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const navigate=useNavigate()
+    const pageSize = 10;
+    useEffect(() => {
+      fetchRoles(currentPage);
+    }, [currentPage]);
+  
+    const fetchRoles = (page) => {
       axios
-        .delete(`${base_url}department/delete_department/${id}`)
+        .get(`${base_url}role/getAllRoles/${page}/${pageSize}`)
         .then(response => {
           console.log(response)
-  
           if (response.status === 200) {
-            alert('Department deleted successfully!');
-            fetchDepartments(currentPage); 
+            setRoles(response.data.rows || []);
+            setTotalPages(response.data.totalPages || 1);
           }
         })
         .catch(err => {
-          console.error('Error deleting department:', err);
-          alert('Failed to delete department');
+          console.error('Error fetching Roles:', err);
+          setError('Failed to fetch Roles');
         });
-    }
-  };
-
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
-
-  const columns = [
-    { key: 'department_id', label: 'ID' },
-    { key: 'department_name', label: 'Department Name' },
-    { key: 'department_head_name', label: 'Department Head Name' },
-    { key: 'department_description', label: 'Department Description' },
-    { key: 'created_at', label: 'Created Date' },
-    { key: 'updated_at', label: 'Updated Date' },
-    { key: 'actions', label: 'Actions' }
-  ];
-
-  return (
+    };
+  
+    const handleEdit = (id) => {
+      console.log(`Editing Role with ID: ${id}`);
+      navigate("/:id")
+  
+      
+    };
+  
+    const handleDelete = (id) => {
+      if (window.confirm('Are you sure you want to delete this Role?')) {
+        axios
+          .delete(`${base_url}role/delete_role/${id}`)
+          .then(response => {
+            if (response.status === 200) {
+              alert('Role deleted successfully!');
+              fetchDepartments(currentPage); 
+            }
+          })
+          .catch(err => {
+            console.error('Error deleting Role:', err);
+            alert('Failed to delete Role');
+          });
+      }
+    };
+  
+    const handlePageChange = (page) => {
+      if (page >= 1 && page <= totalPages) {
+        setCurrentPage(page);
+      }
+    };
+  
+    const columns = [
+      { key: 'role_id', label: 'ID' },
+      { key: 'role_nam', label: 'Role Name' },
+      { key: 'role_description', label: 'Role Description' },
+      { key: 'created_at', label: 'Created Date' },
+      { key: 'actions', label: 'Actions' }
+    ];
+  
+return (
     <div className="p-4  mx-auto">
-      <h2 className="text-3xl font-bold mb-4">Department List</h2>
+      <h2 className="text-3xl font-bold mb-4">Role List</h2>
       {error ? (
         <p style={{ color: 'red' }}>{error}</p>
       ) : (
@@ -93,37 +90,37 @@ function DepartmentList() {
             </tr>
           </thead>
           <tbody>
-  {departments.length > 0 ? (
-    departments.map((dept, index) => (
+  {roles.length > 0 ? (
+    roles.map((role, index) => (
       <tr key={index} className="hover:bg-gray-50">
         {columns.map((col) => (
           <td key={col.key} className="p-2 border border-gray-300">
             {col.key === 'actions' ? (
               <div className="flex gap-2">
                 <button
-                  onClick={() => handleEdit(dept.department_id)}
+                  onClick={() => handleEdit(role.role_id)}
                   className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700"
                 >
                   Edit
                 </button>
                 <button
-                  onClick={() => handleDelete(dept.department_id)}
+                  onClick={() => handleDelete(role.role_id)}
                   className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700"
                 >
                   Delete
                 </button>
               </div>
-            ) : col.key === 'created_at' || col.key === 'updated_at' ? ( // Check for created_at or updated_at
+            ) : col.key === 'created_at'? ( 
               <span>
                 {new Date(dept[col.key]).toLocaleString('en-US', {
-                  weekday: 'long', // Day of the week
-                  year: 'numeric', // Year
-                  month: 'long', // Month
-                  day: 'numeric', // Day
-                  hour: 'numeric', // Hour
-                  minute: 'numeric', // Minute
-                  second: 'numeric', // Second
-                  hour12: true // Use 12-hour time
+                  weekday: 'long', 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric', 
+                  hour: 'numeric', 
+                  minute: 'numeric',
+                  second: 'numeric', 
+                  hour12: true 
                 })}
               </span>
             ) : (
@@ -138,7 +135,7 @@ function DepartmentList() {
       <td colSpan={columns.length} className="p-10 border border-gray-300">
         <div className="flex flex-col items-center justify-center text-center">
           <MdFolderOff size={50} color="gray" />
-          <p className="mt-2 text-gray-500">No departments available</p>
+          <p className="mt-2 text-gray-500">No Role available</p>
         </div>
       </td>
     </tr>
@@ -179,4 +176,5 @@ function DepartmentList() {
   );
 }
 
-export default DepartmentList;
+
+export default RoleList

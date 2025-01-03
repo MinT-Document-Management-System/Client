@@ -18,6 +18,7 @@ import ForgotPasswordMessage from "./pages/ForgotPasswordMessage";
 import ResetPassword from "./pages/ResetPassword";
 import AddNewRole from './pages/AddNewRole';
 import DepartmentList from './pages/DepartmentList';
+import RoleList from './pages/RoleList';
 function App() {
 
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="AddNewDepartment" element={<AddNewDepartment/>}/>
         <Route path="DepartmentList" element={< DepartmentList/>}/>
         <Route path='AddNewRole' element={<AddNewRole/>}/>
+        <Route path="RoleList" element={<RoleList/>}/>
         <Route path='FAQs' element={<FAQs/>}/>
         <Route path='RecordDashboard' element={<RecordDashboard/>}/>'
         <Route path='FAQs' element={<FAQs/>}/>
