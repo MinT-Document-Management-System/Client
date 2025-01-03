@@ -2,10 +2,11 @@ import {React,useEffect,useState} from 'react'
 import { base_url } from '../utils/baseUrl';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 
 const Register = () => {
-  const { navigate }= useNavigate()
+  const navigate= useNavigate()
     const [formData, setFormData] = useState({
         full_name: '',
         username: '',
@@ -30,7 +31,7 @@ const Register = () => {
       
       useEffect(() => {
         axios
-          .get(`${base_url}department/get_all_departments`)
+          .get(`${base_url}department/get_all_departments/${1}/${100}`)
           .then(response => {
             console.log(response)
             if (response.status==200) {
@@ -46,17 +47,15 @@ const Register = () => {
         axios
           .get(`${base_url}role/getAllRoles`)
           .then(response => {
-            if (response.data.success) {
-              const RoleNames = response.data.all_roles.map(role => role.role_name);
+            console.log(response)
+            if (response.status==200) {
+              const RoleNames = response.data.map(role => role.role_name);
               console.log(response)
               setRoles(RoleNames);
             }
           })
           .catch(err => console.error('Error fetching roles:', err));
       }, []);
-      
-    
-
       const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -73,21 +72,19 @@ const Register = () => {
         console.log('Form Data:', formData);
         const response= await axios.post(`${base_url}user/signup`,formData)
         console.log(response)
-        if (response.data.success==true){
-          alert("user created succesfully")
-          toast.succes('User Create Succesfully');
+        if (response.status==201){
+       
+          toast.success('User Create Succesfully');
           navigate("/login")
         }
         else{
           alert("An Errior occure")
-          
-
         }
         }
     
          catch (error) {
             toast.error('Something is wronge');
-            console.log(response.error)
+           
           
             if (error.response) {
               console.error('Error:', error.response.data);
