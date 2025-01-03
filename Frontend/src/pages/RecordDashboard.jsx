@@ -9,7 +9,6 @@ const RecordDashboard = () => {
 
   const [documents, setDocuments] = useState([]);
   const [filePath, setFilePath] = useState([]);
-  const [showIframe, setShowIframe] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,7 +82,7 @@ const RecordDashboard = () => {
     <>
       {!isAddDocumentClicked ? (
         <div className="p-4 h-screen w-full">
-
+       
           <div className="mb-6 flex flex-row justify-between">
             <button
               onClick={handleAddDocument}
