@@ -48,6 +48,7 @@ const Register = () => {
           .then(response => {
             if (response.data.success) {
               const RoleNames = response.data.all_roles.map(role => role.role_name);
+              console.log(response)
               setRoles(RoleNames);
             }
           })

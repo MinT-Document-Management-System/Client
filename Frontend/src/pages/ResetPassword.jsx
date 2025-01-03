@@ -3,10 +3,10 @@ import { FaEnvelope, FaKey } from "react-icons/fa";
 import Logo from "../assets/Logo.jpg";
 import axios from "axios";
 import { base_url } from "../utils/baseUrl";
-import "react-toastify/dist/ReactToastify.css";
+
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
-import {jwtDecode} from "jwt-decode";
+
 
 function ResetPassword() {
   const navigate = useNavigate()
@@ -77,9 +77,10 @@ function ResetPassword() {
   alt="Logo"
   className="w-55 h-55 rounded-full object-cover p-4 mx-auto" 
 />
- <h1>Reset Password</h1>
+    
           <div className="mb-6">
-            
+          <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">🔒 Reset Your Password</h1>
+
             <label className="flex items-center border rounded-md p-4 bg-gray-50">
               <FaEnvelope className="text-gray-500 mr-3 text-xl" />
               <input

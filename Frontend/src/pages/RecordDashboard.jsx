@@ -23,10 +23,26 @@ const RecordDashboard = () => {
     setCheckedItems((prev) => ({ ...prev, [name]: checked }));
   };
 
+  // Handle deletion
+  const handleDelete = () => {
+    if (selectedIds.length === 0) {
+      alert('No cells selected for deletion.');
+      return;
+    }
+
+    // Confirm deletion
+    if (window.confirm('Are you sure you want to delete the selected cells?')) {
+      const updatedData = data.filter((item) => !selectedIds.includes(item.id));
+      setData(updatedData); // Update the state with remaining data
+      setSelectedIds([]); // Clear selection
+    }
+  };
+
   return (
     <>
       {!isAddDocumentClicked ? (
         <div className="p-4 h-screen">
+       
           <div className="mb-6 flex flex-row justify-between">
             <button
               onClick={handleAddDocument}
@@ -114,7 +130,7 @@ const RecordDashboard = () => {
             <button className="bg-[#FFB27D] text-white px-6 py-2 rounded-full">
               Download
             </button>
-            <button className="bg-[rgb(228,44,53)] text-white px-6 py-2 rounded-full">
+            <button onClick={handleDelete} className="bg-[rgb(228,44,53)] text-white px-6 py-2 rounded-full">
               Delete
             </button>
             <button className="bg-[#FFB27D] text-white px-6 py-2 rounded-full">
