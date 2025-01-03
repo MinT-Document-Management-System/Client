@@ -22,19 +22,20 @@ function Login() {
           
           try {
             const response = await axios.post(`${base_url}user/login`,UserLogInData);
-            console.log(response.data)
-            if (response.data.success==true){
-              localStorage.setItem('token', response.data.jwt_token);
+            console.log(response)
+            if (response.status==200){
+              localStorage.setItem('token', response.data);
               toast.success('You are logged in successfully!');
-              const decodedToken = jwtDecode(response.data.jwt_token);
+              const decodedToken = jwtDecode(response.data);
               localStorage.setItem('user_id', decodedToken.user_id);
               localStorage.setItem('full_name', decodedToken.full_name);
+              localStorage.setItem('email', decodedToken.email);
               localStorage.setItem('email', decodedToken.email);
               navigate("/");
             }
             else{
               toast.success('your password or email is incorrect')
-              navigate("/login")
+              navigate("/")
             }
             
            
