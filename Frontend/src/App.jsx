@@ -9,7 +9,6 @@ import Footer from './components/Footer';
 import SharedPage from './pages/SharedPage';
 import Notification from './pages/Notification';
 import Approvals from './pages/Approvals';
-import Upload from './pages/Upload';
 import Register from "./pages/Register"
 import RecordDashboard from './pages/RecordDashboard';
 import AddNewDepartment from './pages/addNewDepartment';

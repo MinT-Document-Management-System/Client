@@ -9,7 +9,14 @@ const RecordDashboard = () => {
 
   const [documents, setDocuments] = useState([]);
   const [filePath, setFilePath] = useState([]);
-  const [showIframe, setShowIframe] = useState(false);
+  const [fileClicked, setFileClicked] = useState(false);
+  const [isAddDocumentClicked, setIsaddDocumentClicked] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [checkedItems, setCheckedItems] = useState({});
+
+  const handleFileOpen = ()=>{
+    setFileClicked(true)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,10 +54,6 @@ const RecordDashboard = () => {
     }
   }, [documents]);
 
-  const [isAddDocumentClicked, setIsaddDocumentClicked] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [checkedItems, setCheckedItems] = useState({});
-
   const handleAddDocument = () => {
     setIsaddDocumentClicked(true);
   }
@@ -82,12 +85,33 @@ const RecordDashboard = () => {
   return (
     <>
       {!isAddDocumentClicked ? (
-        <div className="p-4 h-screen w-full">
+        <div className="flex flex-col mt-8 w-max">
+
+          {fileClicked && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-white rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-1/2">
+                <div className="flex justify-between p-4 border-b">
+                  <h2 className="text-lg font-semibold">PDF Document</h2>
+                  <button onClick={toggleModal} className="text-gray-500 hover:text-gray-800">
+                    &times;
+                  </button>
+                </div>
+                <div className="p-4">
+                  <iframe
+                    src="https://res.cloudinary.com/your-cloud-name/raw/upload/v1234567890/file.pdf"
+                    width="100%"
+                    height="500px"
+                    title="PDF Document"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="mb-6 flex flex-row justify-between">
             <button
               onClick={handleAddDocument}
-              className="bg-[#FFB27D] text-white px-8 py-2 rounded-full flex items-center space-x-2"
+              className="bg-[#FFB27D] text-white px-6 py-2 rounded-full flex items-center space-x-2"
             >
               <GrDocumentUpload />
               <span>Add document</span>
@@ -114,7 +138,7 @@ const RecordDashboard = () => {
             </button>
           </div>
 
-          <div className="mb-4 overflow-y-auto w-[988px] h-[60%]">
+          <div className="mb-4 overflow-y-auto w-[988px] h-[350px]">
 
             <table className="table-auto border-collapse">
               <thead>

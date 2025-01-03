@@ -26,7 +26,7 @@ const About = () => {
       </section>
       
       <footer className="footer mt-4 p-4 bg-gray-200 text-center">
-        <p>&copy; ©2025 MInT. Document Management System. All rights reserved.</p>
+        <p>&copy;2025 MInT. Document Management System. All rights reserved.</p>
       </footer>
     </div>
   );
