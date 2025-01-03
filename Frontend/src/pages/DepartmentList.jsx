@@ -43,7 +43,6 @@ function DepartmentList() {
       axios
         .delete(`${base_url}department/delete_department/${id}`)
         .then(response => {
-         
   
           if (response.status === 200) {
             alert('Department deleted successfully!');

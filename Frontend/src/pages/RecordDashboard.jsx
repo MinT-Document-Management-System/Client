@@ -7,21 +7,44 @@ import axios from "axios";
 
 const RecordDashboard = () => {
 
-  const [data, setData] = useState([]);
+  const [documents, setDocuments] = useState([]);
+  const [filePath, setFilePath] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("https://server-mint.onrender.com/api/letter/get_all_letters?page=1&page_size=10");
-        console.log(response.data);
-        setData(response.data.rows);
+        setDocuments(response.data.rows);
       } catch (error) {
         console.error("Error Recieving file:", error);
         alert("File Recieve failed!");
       }
     };
+
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchLetter = async () => {
+      try {
+        const filePaths = await Promise.all(
+          documents.map(async (document) => {
+            const public_id = document.cloudinary_public_id;
+            const encoded_cloudinary_public_id = encodeURIComponent(public_id);
+            const response = await axios.get(`https://server-mint.onrender.com/api/letter/get_letter/${encoded_cloudinary_public_id}`);
+            return response.data
+          })
+        );
+        setFilePath(filePaths);
+      } catch (error) {
+        console.error("File was not found", error);
+      }
+    };
+
+    if (documents.length > 0) {
+      fetchLetter();
+    }
+  }, [documents]);
 
   const [isAddDocumentClicked, setIsaddDocumentClicked] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -90,13 +113,13 @@ const RecordDashboard = () => {
             </button>
           </div>
 
-          <div className="mb-4 overflow-x-auto overflow-y-auto h-[60%]">
+          <div className="mb-4 overflow-y-auto w-[988px] h-[60%]">
 
             <table className="table-auto border-collapse">
               <thead>
                 <tr>
                   <th className="px-2 py-1 shadow-lg">Document Title</th>
-                  <th className="px-2 py-1 shadow-lg">File Name</th>
+                  <th className="px-2 py-1 shadow-lg">File</th>
                   <th className="px-2 py-1 shadow-lg">Date</th>
                   <th className="px-2 py-1 shadow-lg">Document Type</th>
                   <th className="px-2 py-1 shadow-lg">Description</th>
@@ -105,11 +128,11 @@ const RecordDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, id) => {
+                {documents.map((item, id) => {
                   return (
                     <tr key={id} className="h-12">
                       <td className="px-2 py-1 shadow-lg">{item.title}</td>
-                      <td className="px-2 py-1 shadow-lg"><a href={item.file_path}>{item.file_name}</a></td>
+                      <td className="px-2 py-1 shadow-lg"><button onClick={() => window.open(filePath[id], '_blank')}>{item.file_name}</button></td>
                       <td className="px-2 py-1 shadow-lg">{item.created_at
                       }</td>
                       <td className="px-2 py-1 shadow-lg">{item.document_type
@@ -134,7 +157,7 @@ const RecordDashboard = () => {
             </table>
           </div>
 
-          <div className="flex flex-row justify-around">
+          <div className="flex flex-row justify-between mt-8">
             <button className="bg-[#FFB27D] text-white px-6 py-2 rounded-full">
               Download
             </button>
