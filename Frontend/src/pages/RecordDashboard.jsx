@@ -9,6 +9,14 @@ const RecordDashboard = () => {
 
   const [documents, setDocuments] = useState([]);
   const [filePath, setFilePath] = useState([]);
+  const [fileClicked, setFileClicked] = useState(false);
+  const [isAddDocumentClicked, setIsaddDocumentClicked] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [checkedItems, setCheckedItems] = useState({});
+
+  const handleFileOpen = ()=>{
+    setFileClicked(true)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,10 +54,6 @@ const RecordDashboard = () => {
     }
   }, [documents]);
 
-  const [isAddDocumentClicked, setIsaddDocumentClicked] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [checkedItems, setCheckedItems] = useState({});
-
   const handleAddDocument = () => {
     setIsaddDocumentClicked(true);
   }
@@ -82,11 +86,11 @@ const RecordDashboard = () => {
     <>
       {!isAddDocumentClicked ? (
         <div className="p-4 h-screen w-full">
-       
+      
           <div className="mb-6 flex flex-row justify-between">
             <button
               onClick={handleAddDocument}
-              className="bg-[#FFB27D] text-white px-8 py-2 rounded-full flex items-center space-x-2"
+              className="bg-[#FFB27D] text-white px-6 py-2 rounded-full flex items-center space-x-2"
             >
               <GrDocumentUpload />
               <span>Add document</span>
@@ -113,7 +117,7 @@ const RecordDashboard = () => {
             </button>
           </div>
 
-          <div className="mb-4 overflow-y-auto w-[988px] h-[60%]">
+          <div className="mb-4 overflow-y-auto w-[988px] h-[350px]">
 
             <table className="table-auto border-collapse">
               <thead>
