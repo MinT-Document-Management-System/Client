@@ -24,13 +24,14 @@ function Login() {
             const response = await axios.post(`${base_url}user/login`,UserLogInData);
             console.log(response)
             if (response.status==200){
-              localStorage.setItem('token', response.data);
+              localStorage.setItem('token', response.data.jwt_token
+                );
               toast.success('You are logged in successfully!');
-              const decodedToken = jwtDecode(response.data);
+              const decodedToken = jwtDecode(response.data.jwt_token);
               localStorage.setItem('user_id', decodedToken.user_id);
               localStorage.setItem('full_name', decodedToken.full_name);
               localStorage.setItem('email', decodedToken.email);
-              localStorage.setItem('email', decodedToken.email);
+              localStorage.setItem('Role_Name', decodedToken.role_name);
               navigate("/");
             }
             else{
