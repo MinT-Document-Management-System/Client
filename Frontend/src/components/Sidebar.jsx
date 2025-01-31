@@ -19,12 +19,12 @@ function Sidebar() {
           <Link className='flex items-center gap-1 hover:text-primary' to={'/'}><RxDashboard/> Dashboard</Link>
           <Link className='flex items-center gap-1 hover:text-primary' to={'/RecordDashboard'}><IoDocumentAttach/> Document</Link>
           {role ==='admin' &&(<>
-            <Link className='flex items-center gap-1 hover:text-primary' to={'/about'}><FaRocketchat/>Letters</Link>
+            <Link className='flex items-center gap-1 hover:text-primary' to={'/letter'}><FaRocketchat/>Letters</Link>
             <Link className='flex items-center gap-1 hover:text-primary' to={'/approvals'}><FaCheckCircle/> Approvals</Link>
             </>
           )}
           {role ==='staff' &&(<>
-            <Link className='flex items-center gap-1 hover:text-primary' to={'/about'}><FaRocketchat/>Letters</Link>
+            <Link className='flex items-center gap-1 hover:text-primary' to={'/letter'}><FaRocketchat/>Letters</Link>
             </>
           )}
           {role ==='it' &&(<>

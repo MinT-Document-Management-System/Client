@@ -19,11 +19,15 @@ import ResetPassword from "./pages/ResetPassword";
 import AddNewRole from './pages/AddNewRole';
 import DepartmentList from './pages/DepartmentList';
 import RoleList from './pages/RoleList';
+import { ToastContainer, toast } from 'react-toastify';
+import ItDashboard from './pages/ItDashboard';
 import Profile from './pages/Profile';
+import Letter from './pages/Letter';
 function App() {
 
   return (
     <BrowserRouter>
+    <ToastContainer />
     <Routes>
     <Route path='/login' element={<Login/>}/>
     <Route path='/ForgotPassword' element={<FrogotPassword/>}/>
@@ -37,10 +41,12 @@ function App() {
         <Route path="DepartmentList" element={< DepartmentList/>}/>
         <Route path='AddNewRole' element={<AddNewRole/>}/>
         <Route path="RoleList" element={<RoleList/>}/>
+        <Route path="letter" element={<Letter/>}/>
         <Route path='FAQs' element={<FAQs/>}/>
         <Route path='RecordDashboard' element={<RecordDashboard/>}/>'
         <Route path='FAQs' element={<FAQs/>}/>
-        <Route path='notification' element={<Notification/>}/>
+        {/* <Route path='notification' element={<Notification/>}/> */}
+        <Route path="Itdashboard" element={<ItDashboard/>}/>
         <Route path='approvals' element={<Approvals/>}/>
         <Route path='profile' element={<Profile/>}/>
         <Route path='*' element={<Error/>}/> 

@@ -56,7 +56,6 @@ function Dashboard() {
           </ul>
         </div>
 
-
         {/* Collaboration Features */}
         <div className="bg-white shadow-md rounded-lg p-4">
           <h2 className="text-lg font-semibold">Collaboration Features</h2>
