@@ -17,7 +17,7 @@ const AddNewDepartment = () => {
       .then(response => {
         console.log(response)
         if (response.status==200) {
-          const AllUsers = response.data.map(user => user.full_name);
+          const AllUsers = response.data.rows.map(user => user.full_name);
           console.log(AllUsers)
           setUsers(AllUsers);
         }

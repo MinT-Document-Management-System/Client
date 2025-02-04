@@ -9,6 +9,8 @@ import { useState } from "react";
 
 function Sidebar() {
   const role = localStorage.getItem('Role_Name');
+  const role_id = localStorage.getItem('Role_id');
+  console.log(role_id);
   return (
     <div className="flex fixed flex-row h-screen">
       <div className="bg-primary w-16 h-screen">
@@ -16,22 +18,26 @@ function Sidebar() {
       <div className="flex flex-col gap-10 bg-[#DDDDDD] h-screen p-5 py-6">
         <img src={Logo} alt="Logo" className="w-32 h-32 rounded-full"/>
         <div className="flex flex-col gap-5">
-          <Link className='flex items-center gap-1 hover:text-primary' to={'/'}><RxDashboard/> Dashboard</Link>
-          <Link className='flex items-center gap-1 hover:text-primary' to={'/RecordDashboard'}><IoDocumentAttach/> Document</Link>
-          {role ==='admin' &&(<>
+          {role_id === '1' &&(<>
+            <Link className='flex items-center gap-1 hover:text-primary' to={'/'}><RxDashboard/> Dashboard</Link>
+            <Link className='flex items-center gap-1 hover:text-primary' to={'/RecordDashboard'}><IoDocumentAttach/> Document</Link>
             <Link className='flex items-center gap-1 hover:text-primary' to={'/letter'}><FaRocketchat/>Letters</Link>
             <Link className='flex items-center gap-1 hover:text-primary' to={'/approvals'}><FaCheckCircle/> Approvals</Link>
             </>
           )}
-          {role ==='staff' &&(<>
+          {role_id === '4' &&(<>
+            <Link className='flex items-center gap-1 hover:text-primary' to={'/'}><RxDashboard/> Dashboard</Link>
             <Link className='flex items-center gap-1 hover:text-primary' to={'/letter'}><FaRocketchat/>Letters</Link>
+            <Link className='flex items-center gap-1 hover:text-primary' to={'/RecordDashboard'}><IoDocumentAttach/> Document</Link>
             </>
           )}
-          {role ==='it' &&(<>
-            <Link className='flex items-center gap-1 hover:text-primary' to={'/notification'}><FaRegObjectGroup /> Manage Departments</Link>
-            <Link className='flex items-center gap-1 hover:text-primary' to={'/about'}><FaRegObjectGroup/>Manage Staff</Link>
-            <Link className='flex items-center gap-1 hover:text-primary' to={'/about'}><IoMdSettings/>System Configuration</Link>
-            <Link className='flex items-center gap-1 hover:text-primary' to={'/about'}><FaUserCog/>User Activity Logs</Link>
+          {role_id === '5' &&(<>
+            <Link className='flex items-center gap-1 hover:text-primary' to={'/Itdashboard'}><RxDashboard/> Dashboard</Link>
+            <Link className='flex items-center gap-1 hover:text-primary' to={'/RecordDashboard'}><IoDocumentAttach/> Document</Link>
+            <Link className='flex items-center gap-1 hover:text-primary' to={'/AddNewDepartment'}><FaRegObjectGroup /> Manage Departments</Link>
+            <Link className='flex items-center gap-1 hover:text-primary' to={'/Register'}><FaRegObjectGroup/>Manage Staff</Link>
+            <Link className='flex items-center gap-1 hover:text-primary' to={'/SystemConfiguration'}><IoMdSettings/>System Configuration</Link>
+            <Link className='flex items-center gap-1 hover:text-primary' to={'/UserActivityLogs'}><FaUserCog/>User Activity Logs</Link>
             <Link className='flex items-center gap-1 hover:text-primary' to={'/about'}><FaFileSignature/>Reports</Link>
             </>
           )}

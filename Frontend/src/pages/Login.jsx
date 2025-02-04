@@ -16,6 +16,7 @@ function Login() {
     password: '',
          
         })
+
    
         const handleLogin = async (e) => {
           e.preventDefault()
@@ -32,6 +33,7 @@ function Login() {
               localStorage.setItem('full_name', decodedToken.full_name);
               localStorage.setItem('email', decodedToken.email);
               localStorage.setItem('Role_Name', decodedToken.role_name);
+              localStorage.setItem('Role_id', decodedToken.role_id);
               navigate("/");
             }
             else{
@@ -115,7 +117,7 @@ function Login() {
               />
               <span className="ml-2 text-lg text-gray-600">Remember me</span>
             </label>
-            <button className="text-lg text-blue-500 hover:underline">
+            <button className="text-lg text-blue-500 hover:underline" onClick={()=>{navigate('/ForgotPassword')}}>
               Forgot Password?
             </button>
           </div>

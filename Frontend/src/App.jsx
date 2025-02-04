@@ -22,6 +22,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import ItDashboard from './pages/ItDashboard';
 import Profile from './pages/Profile';
 import Letter from './pages/Letter';
+import SystemConfiguration from './pages/SystemConfiguration';
+import UserActivityLogs from './pages/UserActivityLogs';
 function App() {
 
   return (
@@ -31,12 +33,15 @@ function App() {
     <Route path='/login' element={<Login/>}/>
     <Route path='/ForgotPassword' element={<FrogotPassword/>}/>
     <Route path='/ForgotPasswordMessage' element={<ForgotPasswordMessage/>}/>
+    <Route path='*' element={<Error/>}/> 
     <Route path="/reset_password" element={<ResetPassword/>}/>
       <Route path='/' element={<SharedPage/>}>
         <Route index element={<Dashboard/>}/>
         <Route path='about' element={<About/>}/>
         <Route path='Register' element={<Register/>}/>
         <Route path="AddNewDepartment" element={<AddNewDepartment/>}/>
+        <Route path="SystemConfiguration" element={<SystemConfiguration/>}/>
+        <Route path="UserActivityLogs" element={<UserActivityLogs/>}/>
         <Route path="DepartmentList" element={< DepartmentList/>}/>
         <Route path='AddNewRole' element={<AddNewRole/>}/>
         <Route path="RoleList" element={<RoleList/>}/>
@@ -48,7 +53,6 @@ function App() {
         <Route path="Itdashboard" element={<ItDashboard/>}/>
         <Route path='approvals' element={<Approvals/>}/>
         <Route path='profile' element={<Profile/>}/>
-        <Route path='*' element={<Error/>}/> 
       </Route>
     </Routes>
     {/* <footer><Footer/></footer> */}

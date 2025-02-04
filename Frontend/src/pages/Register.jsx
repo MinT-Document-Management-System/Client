@@ -75,8 +75,8 @@ const Register = () => {
         console.log(response)
         if (response.status==201){
        
-          toast.success('User Create Succesfully');
-          navigate("/login")
+          toast.success('User Created Succesfully...');
+          // navigate("/login")
         }
         else{
           alert("An Errior occure")

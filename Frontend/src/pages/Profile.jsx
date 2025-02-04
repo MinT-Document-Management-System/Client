@@ -55,6 +55,9 @@ const Profile = () => {
                         <div className="mb-4">
                             <p className="text-lg">Email: {user.email}</p>
                         </div>
+                        <div className="mb-4">
+                            <p className="text-lg">Phone Number: {user.phone_number}</p>
+                        </div>
                     </div>
                     <div className="ml-6">
                         <img src={photo} alt="Account Holder" className="account-photo w-24 h-24 border border-primary rounded-full"/>
