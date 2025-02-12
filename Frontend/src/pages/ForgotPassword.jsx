@@ -10,41 +10,25 @@ import { useNavigate } from 'react-router-dom';
 
 function FrogotPassword() {
   const navigate = useNavigate()
-   const [UserData, setUserData] = useState({
-    
-    email: ''
-         
-        })
-        const handleResetPassword = async () => {
-          try {
-            const response = await axios.post(`${base_url}user/reset_password`,UserData);
-            console.log(response.data)
-            if (response.data.success==true){
-            toast.success('please check your email addrase')
-             
-              navigate("/emailMessage");
-            }
-            else{
-              toast.success('your password or email is incorrect')
-              window.location.reload()
-              
-            }
-            
-           
-          } catch (error) {
-            toast.error('your password or email is incorrect');
-            console.log(response.error)
-          
-            if (error.response) {
-              console.error('Error:', error.response.data);
+  const [UserData, setUserData] = useState({email: ''})
 
-            }  else {
-              console.error('Error', error.message);
-            }
-            toast.error('your password or email is incorrect');
-           
-          }
-        };
+ const handleResetPassword = async () => {
+  try {
+      const response = await axios.post(`${base_url}user/forget_password_send_otp`, {
+          user_email: UserData.email // Adjusted payload structure
+      });
+      console.log(response.data);
+      if (response.data.success === true) {
+      } else {
+        toast.success('Please check your email address');
+        navigate("/reset_password");
+        window.location.reload();  
+      }
+  } catch (error) {
+      toast.error('Error sending OTP');
+      // console.error('Error:', error.response ? error.response.data : error.message);
+  }
+};
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -85,13 +69,12 @@ function FrogotPassword() {
             </label>
           </div>
          
-          
           {/* Login Button */}
           <button
             onClick={handleResetPassword}
             className="w-full bg-blue-500 text-white py-3 rounded-lg font-bold text-lg hover:bg-blue-600 transition"
           >
-            ReSet Password
+            Reset Password
           </button>
         </div>
       </div>

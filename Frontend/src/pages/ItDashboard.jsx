@@ -4,6 +4,7 @@ import { base_url } from '../utils/baseUrl';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { toast } from 'react-toastify';
+import Cookies from 'js-cookie'; // Import Cookies to use for getting the token
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -25,7 +26,13 @@ function ItDashboard() {
   useEffect(() => {
     const fetchRecentlyAddedUsers = async () => {
       try {
-        const response = await axios.get(`${base_url}user/get_recently_created_users`);
+        const token = Cookies.get('jwt_token'); // Get the token from cookies
+        const response = await axios.get(`${base_url}user/get_recently_created_users`, {
+          headers: {
+            'Authorization': `Bearer ${token}`, // Include the token in headers
+            'Content-Type': 'application/json',
+          },
+        });
         if (response.status === 200) {
           setRecentlyUser(response.data.recent_users);
           toast.success('Recently Added Users Fetched Successfully');
@@ -47,8 +54,15 @@ function ItDashboard() {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
+        const token = Cookies.get('jwt_token'); // Get the token from cookies
         const response = await axios.get(
-          `${base_url}department/get_all_departments/${PAGE_NUM}/${PAGE_SIZE}`
+          `${base_url}department/get_all_departments/${PAGE_NUM}/${PAGE_SIZE}`,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`, // Include the token in headers
+              'Content-Type': 'application/json',
+            },
+          }
         );
 
         if (response.status === 200 && Array.isArray(response.data)) {
@@ -56,7 +70,13 @@ function ItDashboard() {
             response.data.map(async (dept) => {
               try {
                 const countResponse = await axios.get(
-                  `${base_url}department/get_user_count_by_department/${dept.department_name}`
+                  `${base_url}department/get_user_count_by_department/${dept.department_name}`,
+                  {
+                    headers: {
+                      'Authorization': `Bearer ${token}`, // Include the token in headers
+                      'Content-Type': 'application/json',
+                    },
+                  }
                 );
 
                 return {
