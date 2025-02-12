@@ -6,10 +6,11 @@ import { RiAccountCircleFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import Logo from "../assets/Logo.jpg";
 import { useState } from "react";
+import Cookies from 'js-cookie'; 
 
 function Sidebar() {
-  const role = localStorage.getItem('Role_Name');
-  const role_id = localStorage.getItem('Role_id');
+  const role = Cookies.get('Role_Name');
+  const role_id = Cookies.get('Role_id');
   console.log(role_id);
   return (
     <div className="flex fixed flex-row h-screen">
@@ -18,7 +19,7 @@ function Sidebar() {
       <div className="flex flex-col gap-10 bg-[#DDDDDD] h-screen p-5 py-6">
         <img src={Logo} alt="Logo" className="w-32 h-32 rounded-full"/>
         <div className="flex flex-col gap-5">
-          {role_id === '1' &&(<>
+          {role_id === '1' && (<>
             <Link className='flex items-center gap-1 hover:text-primary' to={'/'}><RxDashboard/> Dashboard</Link>
             <Link className='flex items-center gap-1 hover:text-primary' to={'/RecordDashboard'}><IoDocumentAttach/> Document</Link>
             <Link className='flex items-center gap-1 hover:text-primary' to={'/letter'}><FaRocketchat/>Letters</Link>

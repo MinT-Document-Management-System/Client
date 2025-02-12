@@ -1,35 +1,59 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { base_url } from '../utils/baseUrl';
+import { base_url } from '../utils/baseUrl'; // Adjust as necessary
 import photo from '../assets/Logo.jpg';
+import Cookies from 'js-cookie';
+import {jwtDecode} from 'jwt-decode';
+
+// Set Axios to send cookies with requests
+axios.defaults.withCredentials = true;
+
 const Profile = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const loginId = localStorage.getItem('user_id'); 
-    console.log(loginId);
+    const loginId = Cookies.get('user_id'); 
+    const token = Cookies.get('jwt_token'); // Retrieve jwt_token from cookies
+
     useEffect(() => {
         const fetchUserData = async () => {
+            if (!token) {
+                setError('Token not found. Please log in again.');
+                setLoading(false);
+                return;
+            }
+
+            // Decode token to check expiration
+            const decoded = jwtDecode(token);
+            console.log("Token Expiry:", decoded.exp); // Check token expiry
+
             try {
-                const response = await axios.get(`${base_url}user/get_user_data/${loginId}`);
+                console.log("Token:", token); // Debugging: Check token value
+                const response = await axios.get(`${base_url}user/get_user_data/${loginId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Use jwt_token in the header
+                        'Content-Type': 'application/json',
+                    },
+                    withCredentials: true, // Ensure cookies are sent
+                });
+
                 setUser(response.data);
-                console.log(response.data);
             } catch (err) {
-                setError(err.message);
+                console.error("Error fetching user data:", err.response); // Log full error response
+                setError(err.response ? err.response.data.message : err.message);
             } finally {
                 setLoading(false);
             }
         };
         
-        console.log(user);
         if (loginId) {
             fetchUserData();
         } else {
             setError('User ID not found');
             setLoading(false);
         }
-    }, [loginId]);
+    }, [loginId, token]);
 
     if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
     if (error) return <div className="flex justify-center items-center h-screen text-red-500">Error: {error}</div>;

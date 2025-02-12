@@ -3,60 +3,57 @@ import { FaEnvelope, FaKey } from "react-icons/fa";
 import Logo from "../assets/Logo.jpg";
 import axios from "axios";
 import { base_url } from "../utils/baseUrl";
-
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
+import Cookies from 'js-cookie'; 
+
+// Set Axios to send cookies with requests
+axios.defaults.withCredentials = true;
 
 function Login() {
-  const navigate = useNavigate()
-   const [UserLogInData, setUserLogInData] = useState({
-    
+  const navigate = useNavigate();
+  const [UserLogInData, setUserLogInData] = useState({
     email: '',
     password: '',
-         
-        })
+  });
 
-   
-        const handleLogin = async (e) => {
-          e.preventDefault()
-          
-          try {
-            const response = await axios.post(`${base_url}user/login`,UserLogInData);
-            console.log(response);
-            console.log(response.data)
-            if (response.status==200){
-              localStorage.setItem('token', response.data.jwt_token);
-              toast.success('You are logged in successfully!');
-              const decodedToken = jwtDecode(response.data.jwt_token);
-              localStorage.setItem('user_id', decodedToken.user_id);
-              localStorage.setItem('full_name', decodedToken.full_name);
-              localStorage.setItem('email', decodedToken.email);
-              localStorage.setItem('Role_Name', decodedToken.role_name);
-              localStorage.setItem('Role_id', decodedToken.role_id);
-              navigate("/");
-            }
-            else{
-              toast.success('your password or email is incorrect')
-              alert('your password or email is incorrect');
-              navigate("/login")
-            }
-            
-          } catch (error) {
-            toast.error('your password or email is incorrect');
-            console.log(response.error)
-            alert('your password or email is incorrect');
-          
-            if (error.response) {
-              console.error('Error:', error.response.data);
-
-            }  else {
-              console.error('Error', error.message);
-            }
-            toast.error('your password or email is incorrect');
-           
-          }
-        };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await axios.post(`${base_url}user/login`, UserLogInData);
+      console.log(response);
+      console.log(response.data);
+      if (response.status === 200) {
+        Cookies.set('jwt_token', response.data.jwt_token, { expires: 7 }); // Set the token in a cookie
+        toast.success('You are logged in successfully!');
+        const decodedToken = jwtDecode(response.data.jwt_token);
+        Cookies.set('user_id', decodedToken.user_id); // Optional: Store other data in cookies if needed
+        Cookies.set('full_name', decodedToken.full_name);
+        Cookies.set('email', decodedToken.email);
+        Cookies.set('Role_Name', decodedToken.role_name);
+        Cookies.set('Role_id', decodedToken.role_id);
+        navigate("/");
+      } else {
+        toast.success('Your password or email is incorrect');
+        alert('Your password or email is incorrect');
+        navigate("/login");
+      }
+      
+    } catch (error) {
+      toast.error('Your password or email is incorrect');
+      console.log(error);
+      alert('Your password or email is incorrect');
+      
+      if (error.response) {
+        console.error('Error:', error.response.data);
+      } else {
+        console.error('Error', error.message);
+      }
+      toast.error('Your password or email is incorrect');
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -71,18 +68,17 @@ function Login() {
       className="flex h-screen"
       style={{ backgroundColor: "#FFB27D" }} 
     >
-   
       <div className="w-1/6 bg-blue-green">
         <div className="flex items-center justify-center h-full text-white font-bold text-3xl">
         </div>
       </div>
       <div className="flex-1 flex items-center justify-center">
-        <div className=" p-12 rounded-lg  w-3/5 max-w-xl">
+        <div className="p-12 rounded-lg w-3/5 max-w-xl">
           <img
-  src={Logo}
-  alt="Logo"
-  className="w-55 h-55 rounded-full object-cover p-4 mx-auto" 
-/>
+            src={Logo}
+            alt="Logo"
+            className="w-55 h-55 rounded-full object-cover p-4 mx-auto" 
+          />
           <div className="mb-6">
             <label className="flex items-center border rounded-md p-4 bg-gray-50">
               <FaEnvelope className="text-gray-500 mr-3 text-xl" />
@@ -117,7 +113,7 @@ function Login() {
               />
               <span className="ml-2 text-lg text-gray-600">Remember me</span>
             </label>
-            <button className="text-lg text-blue-500 hover:underline" onClick={()=>{navigate('/ForgotPassword')}}>
+            <button className="text-lg text-blue-500 hover:underline" onClick={() => { navigate('/ForgotPassword') }}>
               Forgot Password?
             </button>
           </div>

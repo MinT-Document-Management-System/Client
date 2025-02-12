@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from "axios";
+import Cookies from 'js-cookie';
 
 const Metadata = ({ isOpen,  file}) => {
 
@@ -55,10 +56,13 @@ const Metadata = ({ isOpen,  file}) => {
     formData.append("department_list", departmentList);
 
     try {
+       const token = Cookies.get('jwt_token');
         const response = await axios.post("https://server-mint.onrender.com/api/letter/upload_letter", formData, {
             headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "multipart/form-data",
             },
+            
         });
         alert("File uploaded successfully!");
         console.log(response.data);

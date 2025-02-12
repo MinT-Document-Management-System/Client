@@ -4,6 +4,7 @@ import { GrDocumentUpload } from "react-icons/gr";
 import { CiSearch } from "react-icons/ci";
 import { TbFilterUp } from "react-icons/tb";
 import axios from "axios";
+import Cookies from 'js-cookie'; 
 
 const RecordDashboard = () => {
   const [documents, setDocuments] = useState([]);
@@ -20,40 +21,63 @@ const RecordDashboard = () => {
     endDate: '',
   });
 
+  // Fetch documents on component mount
+  axios.defaults.withCredentials = true;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://server-mint.onrender.com/api/letter/get_all_letters?page=1&page_size=100");
-        setDocuments(response.data.rows);
+        const token = Cookies.get('jwt_token');
+        console.log("Token:", token); // Log the token
+        const response = await axios.get("https://server-mint.onrender.com/api/letter/get_all_letters", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(response.data);
+        
+        // Set documents and sort by created date (latest first)
+        const sortedDocuments = response.data.rows || [];
+        sortedDocuments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        setDocuments(sortedDocuments);
       } catch (error) {
-        console.error("Error Receiving file:", error);
-        alert("File Receive failed!");
+        console.error("Error receiving files:", error);
+        if (error.response) {
+          console.error("Error Response Data:", error.response.data); // Log detailed error response
+        }
+        alert("File receive failed!");
       }
     };
 
     fetchData();
   }, []);
 
+  // Fetch individual letter details when documents change
   useEffect(() => {
     const fetchLetter = async () => {
+      if (documents.length === 0) return; // Exit if no documents
+
       try {
+        const token = Cookies.get('jwt_token');
         const filePaths = await Promise.all(
           documents.map(async (document) => {
             const public_id = document.cloudinary_public_id;
             const encoded_cloudinary_public_id = encodeURIComponent(public_id);
-            const response = await axios.get(`https://server-mint.onrender.com/api/letter/get_letter/${encoded_cloudinary_public_id}`);
-            return response.data;
+            const response = await axios.get(`https://server-mint.onrender.com/api/letter/get_letter/${encoded_cloudinary_public_id}`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            return response.data.file_path; // Adjust based on your API response
           })
         );
         setFilePath(filePaths);
+        console.log(filePath)
       } catch (error) {
-        console.error("File was not found", error);
+        console.error("File was not found:", error);
       }
     };
 
-    if (documents.length > 0) {
-      fetchLetter();
-    }
+    fetchLetter();
   }, [documents]);
 
   const handleAddDocument = () => {
@@ -99,10 +123,15 @@ const RecordDashboard = () => {
 
     if (window.confirm('Are you sure you want to delete the selected documents?')) {
       try {
+        const token = Cookies.get('jwt_token');
         await Promise.all(selectedIds.map(async (id) => {
           const document = documents.find(doc => doc.document_id === id);
           const public_id = document.cloudinary_public_id;
-          await axios.delete(`https://server-mint.onrender.com/api/letter/delete_letter/${encodeURIComponent(public_id)}`);
+          await axios.delete(`https://server-mint.onrender.com/api/letter/delete_letter/${encodeURIComponent(public_id)}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
         }));
 
         setDocuments(documents.filter(doc => !selectedIds.includes(doc.document_id)));

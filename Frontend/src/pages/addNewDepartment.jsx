@@ -9,17 +9,22 @@ const AddNewDepartment = () => {
     department_description: "",
     
   });
+  
   const [Users,setUsers]=useState([])
+  const [Users_id, setUsers_id] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`${base_url}user/get_all_users`)
+      .get(`${base_url}user/get_all_users?page_size=100`)
       .then(response => {
         console.log(response)
         if (response.status==200) {
-          const AllUsers = response.data.rows.map(user => user.full_name);
+          const AllUsers = response.data.rows.map(user => user);
+          // const AllUsers_id = response.data.row.map(user => user.user_id)
           console.log(AllUsers)
+          // console.log(AllUsers_id)
           setUsers(AllUsers);
+          // setUsers_id(AllUsers_id)
         }
       })
       .catch(err => console.error('Error fetching departments:', err));
@@ -39,7 +44,7 @@ const AddNewDepartment = () => {
 
     try {
       
-      alert('Department added successfully!');
+      // alert('Department added successfully!');
       
       axios.post(`${base_url}department/add_department`,formData)
         .then((response)=>{
@@ -89,8 +94,8 @@ const AddNewDepartment = () => {
                required>
                 <option value="">Select Head</option>
                 {Users.map((user, index) => (
-                   <option key={index} value={user}>
-                    {user}
+                   <option key={index} value={user.user_id}>
+                    {user.full_name}
                     </option>))}
             </select>
         </div>
