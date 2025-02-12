@@ -16,11 +16,9 @@ function ResetPassword() {
     old_password: '',
     new_password: '',
     confirm_password: ''
-         
-        })
+    })
+    
         const handleChangePassword = async () => {
-          
-          
           try {
             if (PasswordData.new_password !== PasswordData.confirm_password) {
                 toast.error("New password and confirm password must match!");
@@ -39,7 +37,7 @@ function ResetPassword() {
            
           } catch (error) {
             toast.error('your password or email is incorrect');
-            console.log(response.error)
+            console.log(error)
           
             if (error.response) {
               console.error('Error:', error.response.data);
