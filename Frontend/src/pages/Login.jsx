@@ -16,6 +16,9 @@ function Login() {
     password: '',
          
         })
+        const handleforgot=()=>{
+          navigate("/ForgotPassword")
+        }
    
         const handleLogin = async (e) => {
           e.preventDefault()
@@ -114,7 +117,8 @@ function Login() {
               />
               <span className="ml-2 text-lg text-gray-600">Remember me</span>
             </label>
-            <button className="text-lg text-blue-500 hover:underline">
+            <button className="text-lg text-blue-500 hover:underline" onClick={handleforgot}>
+
               Forgot Password?
             </button>
           </div>
